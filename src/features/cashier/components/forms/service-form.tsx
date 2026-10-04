@@ -1,20 +1,53 @@
+import { useState } from "react";
+import { addService } from "../../../../api/service";
+
 type ServiceFormProps = {
   onClose?: () => void;
 };
 
 function ServiceForm({ onClose }: ServiceFormProps) {
-  function handleClose() {
-    onClose?.();
+  const [formValue, setFormValue] = useState<{
+    title: string;
+    price: number;
+  }>({
+    title: "",
+    price: 0,
+  });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>, key: string) {
+    const { value } = e.target;
+    setFormValue((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!formValue.title || formValue.price === 0) return;
+
+    try {
+      await addService({
+        title: formValue.title,
+        price: formValue.price,
+      });
+      onClose?.();
+    } catch (e) {
+      console.error("failed to add new service: ", e);
+    }
   }
 
   return (
-    <form className="flex flex-col p-4 bg-white rounded-md">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col p-4 bg-white rounded-md"
+    >
       <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-300">
         <h6 className="font-medium text-lg">Add New Service</h6>
         <button
           type="button"
           className="grid place-content-center size-9 hover:bg-slate-100 active:scale-95 transition-transform rounded-full"
-          onClick={handleClose}
+          onClick={() => onClose?.()}
         >
           <span className="icon-[tabler--x]" />
         </button>
@@ -27,20 +60,27 @@ function ServiceForm({ onClose }: ServiceFormProps) {
           </label>
           <input
             type="text"
-            placeholder="Enter sparepart title"
-            id="title"
+            placeholder="Enter service title"
+            value={formValue?.title}
+            onChange={(e) => handleChange(e, "title")}
+            required
             className="px-3 h-9 text-sm border border-slate-300 outline-0 rounded"
+            id="title"
           />
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="selling_price" className="text-sm text-slate-600">
-            Selling Price
+            Price
           </label>
           <input
-            type="text"
-            placeholder="Enter sparepart selling price"
-            id="selling_price"
+            type="number"
+            placeholder="Enter service price"
+            value={formValue?.price}
+            onChange={(e) => handleChange(e, "price")}
+            min={0}
+            required
             className="px-3 h-9 text-sm border border-slate-300 outline-0 rounded"
+            id="price"
           />
         </div>
       </div>
@@ -49,7 +89,7 @@ function ServiceForm({ onClose }: ServiceFormProps) {
         <button
           type="button"
           className="px-3 h-9 text-sm text-slate-600 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
-          onClick={handleClose}
+          onClick={() => onClose?.()}
         >
           <span>Cancel</span>
         </button>
