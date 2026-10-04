@@ -1,8 +1,13 @@
 import { useState } from "react";
 import DialogLayer from "../../../../components/dialog-layer";
+import type { ServiceItem } from "../../types/service";
 import ServiceForm from "../forms/service-form";
 
-function CreateServiceDialog() {
+type CreateServiceDialogProps = {
+  onSuccess: (item: ServiceItem) => void;
+};
+
+function CreateServiceDialog({ onSuccess }: CreateServiceDialogProps) {
   const [showDialog, setShowDialog] = useState<boolean>(false);
 
   function closeDialog() {
@@ -20,7 +25,7 @@ function CreateServiceDialog() {
       </button>
 
       <DialogLayer show={showDialog}>
-        <ServiceForm onClose={closeDialog} />
+        <ServiceForm onClose={closeDialog} onSuccess={onSuccess} />
       </DialogLayer>
     </>
   );

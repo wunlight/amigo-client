@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { addService } from "../../../../api/service";
+import { addService } from "../../api";
+import type { ServiceItem } from "../../types/service";
 
 type ServiceFormProps = {
-  onClose?: () => void;
+  onClose: () => void;
+  onSuccess: (item: ServiceItem) => void;
 };
 
-function ServiceForm({ onClose }: ServiceFormProps) {
+function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
   const [formValue, setFormValue] = useState<{
     title: string;
     price: number;
@@ -27,11 +29,13 @@ function ServiceForm({ onClose }: ServiceFormProps) {
     if (!formValue.title || formValue.price === 0) return;
 
     try {
-      await addService({
+      const res = await addService({
         title: formValue.title,
         price: formValue.price,
       });
-      onClose?.();
+
+      onClose();
+      onSuccess(res.data);
     } catch (e) {
       console.error("failed to add new service: ", e);
     }
@@ -47,7 +51,7 @@ function ServiceForm({ onClose }: ServiceFormProps) {
         <button
           type="button"
           className="grid place-content-center size-9 hover:bg-slate-100 active:scale-95 transition-transform rounded-full"
-          onClick={() => onClose?.()}
+          onClick={() => onClose()}
         >
           <span className="icon-[tabler--x]" />
         </button>
@@ -89,7 +93,7 @@ function ServiceForm({ onClose }: ServiceFormProps) {
         <button
           type="button"
           className="px-3 h-9 text-sm text-slate-600 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
-          onClick={() => onClose?.()}
+          onClick={() => onClose()}
         >
           <span>Cancel</span>
         </button>
