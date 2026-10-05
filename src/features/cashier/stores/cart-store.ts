@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { CheckoutPayload } from "../types/checkout";
 
-export interface CartItem {
+export type CartItem = {
   id: string;
   name: string;
   price: number;
   stock: number;
   qty: number;
   type: "sparepart" | "service";
-}
+};
 
 interface CartState {
   items: CartItem[];
@@ -30,6 +31,8 @@ interface CartState {
   getSparepartsTotalAmount: () => number;
   getServicesTotalAmount: () => number;
   getTotalAmount: () => number;
+
+  getCheckoutPayload: () => CheckoutPayload;
 }
 
 export const useCartStore = create<CartState>()(
@@ -159,6 +162,20 @@ export const useCartStore = create<CartState>()(
 
       getTotalAmount: () =>
         get().items.reduce((total, item) => total + item.price * item.qty, 0),
+
+      getCheckoutPayload: () => {
+        const { items, getTotalAmount } = get();
+
+        return {
+          total_amount: getTotalAmount(),
+          items: items.map((item) => ({
+            item_id: item.id,
+            type: item.type,
+            price: item.price,
+            qty: item.qty,
+          })),
+        };
+      },
     }),
     {
       name: "cashier-cart-storage",

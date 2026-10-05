@@ -2,12 +2,16 @@ type CartSummaryProps = {
   sparepartTotal: number;
   serviceTotal: number;
   grandTotal: number;
+  disableCheckout: boolean;
+  processTransaction: () => void;
 };
 
 function CartSummary({
   sparepartTotal,
   serviceTotal,
   grandTotal,
+  disableCheckout,
+  processTransaction,
 }: CartSummaryProps) {
   return (
     <div className="flex flex-col gap-3 py-3">
@@ -25,7 +29,11 @@ function CartSummary({
           <p>Rp. {grandTotal.toLocaleString("en-US")}</p>
         </div>
       </div>
-      <button className="flex items-center justify-center h-9 text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer">
+      <button
+        className="flex items-center justify-center h-9 text-sm text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
+        disabled={disableCheckout}
+        onClick={() => processTransaction()}
+      >
         <span>Process Transaction</span>
       </button>
     </div>

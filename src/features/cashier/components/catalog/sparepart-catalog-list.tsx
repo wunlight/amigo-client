@@ -48,6 +48,7 @@ function SparepartCatalogList() {
                     type: "sparepart",
                   })
                 }
+                // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
                 increaseQty={() => cartStore.incrementQty(s.id)}
                 decreaseQty={() => cartStore.decrementQty(s.id)}
               />
@@ -75,6 +76,7 @@ function SparepartCatalogList() {
                     type: "sparepart",
                   })
                 }
+                // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
                 increaseQty={() => cartStore.incrementQty(s.id)}
                 decreaseQty={() => cartStore.decrementQty(s.id)}
               />

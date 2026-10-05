@@ -6,6 +6,7 @@ type SparepartCartItemProps = {
   totalPrice: number;
 
   updatePrice: (newPrice: number) => void;
+  // updateQty: (newQty: number) => void;
   increaseQty: () => void;
   decreaseQty: () => void;
 };
@@ -17,6 +18,7 @@ function SparepartCartItem({
   cartQty,
   totalPrice,
   updatePrice,
+  // updateQty,
   increaseQty,
   decreaseQty,
 }: SparepartCartItemProps) {
@@ -25,7 +27,7 @@ function SparepartCartItem({
       <div className="space-y-1">
         <p className="font-medium">{name}</p>
         <input
-          type="number"
+          type="text"
           value={price}
           onChange={(e) => updatePrice(Number(e.target.value))}
           className="w-40 text-sm text-slate-500 focus:outline-1 outline-slate-300 rounded"
@@ -40,13 +42,15 @@ function SparepartCartItem({
           >
             <span className="icon-[tabler--minus]" />
           </button>
-          <input
+          {/* <input
             type="text"
             value={cartQty}
+            onChange={(e) => updateQty(Number(e.target.value))}
             className="size-6 text-center text-sm"
-          />
+          /> */}
+          <div className="size-6 text-center text-sm">{cartQty}</div>
           <button
-            className="grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded disabled:opacity-75 active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
+            className="grid place-content-center size-6 text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
             disabled={cartQty >= currentStock}
             onClick={() => increaseQty()}
           >

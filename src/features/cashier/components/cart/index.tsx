@@ -1,3 +1,4 @@
+import { createSale } from "../../api/checkout";
 import { useCartStore } from "../../stores/cart-store";
 import CartHeader from "./cart-header";
 import CartItemList from "./cart-item-list";
@@ -5,6 +6,17 @@ import CartSummary from "./cart-summary";
 
 function TransactionCart() {
   const cartStore = useCartStore();
+
+  async function processTransaction() {
+    const payload = cartStore.getCheckoutPayload();
+
+    try {
+      await createSale(payload);
+      cartStore.clearCart();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <div className="flex flex-col px-3 h-full w-100 bg-white divide-y divide-slate-300 rounded-md">
@@ -17,6 +29,8 @@ function TransactionCart() {
         sparepartTotal={cartStore.getSparepartsTotalAmount()}
         serviceTotal={cartStore.getServicesTotalAmount()}
         grandTotal={cartStore.getTotalAmount()}
+        disableCheckout={cartStore.items.length <= 0}
+        processTransaction={processTransaction}
       />
     </div>
   );

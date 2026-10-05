@@ -23,6 +23,7 @@ function CartItemList() {
           cartQty={cartStore.getItemQty(s.id)}
           totalPrice={cartStore.getItemTotalPrice(s.id)}
           updatePrice={(newPrice) => cartStore.updatePrice(s.id, newPrice)}
+          // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
           increaseQty={() => cartStore.incrementQty(s.id)}
           decreaseQty={() => cartStore.decrementQty(s.id)}
         />
