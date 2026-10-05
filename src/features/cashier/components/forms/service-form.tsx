@@ -58,7 +58,7 @@ function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
 
       <div className="flex flex-col gap-3 py-6">
         <div className="flex flex-col gap-1">
-          <label htmlFor="title" className="text-sm text-slate-600">
+          <label htmlFor="title" className="text-sm text-slate-500">
             Title
           </label>
           <input
@@ -72,7 +72,7 @@ function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="selling_price" className="text-sm text-slate-600">
+          <label htmlFor="selling_price" className="text-sm text-slate-500">
             Price
           </label>
           <input
@@ -91,7 +91,7 @@ function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
       <div className="flex items-center justify-end gap-4 pt-2 border-t border-slate-300">
         <button
           type="button"
-          className="px-3 h-9 text-sm text-slate-600 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
+          className="px-3 h-9 text-sm text-slate-500 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
           onClick={() => onClose()}
         >
           <span>Cancel</span>

@@ -11,12 +11,24 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[];
+
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
+  updatePrice: (id: string, newPrice: number) => void;
+  updateQty: (id: string, qty: number) => void;
+  incrementQty: (id: string) => void;
+  decrementQty: (id: string) => void;
+  clearCart: () => void;
 
   isInCart: (id: string) => boolean;
   getSpareparts: () => CartItem[];
   getServices: () => CartItem[];
+
+  getItemQty: (id: string) => number;
+  getItemTotalPrice: (id: string) => number;
+  getSparepartsTotalAmount: () => number;
+  getServicesTotalAmount: () => number;
+  getTotalAmount: () => number;
 }
 
 export const useCartStore = create<CartState>()(
@@ -31,9 +43,7 @@ export const useCartStore = create<CartState>()(
           );
 
           if (newItem.type === "service") {
-            if (existingIndex !== -1) {
-              return state;
-            }
+            if (existingIndex !== -1) return state;
             return {
               items: [...state.items, { ...newItem, qty: 1 }],
             };
@@ -62,17 +72,92 @@ export const useCartStore = create<CartState>()(
         }));
       },
 
-      isInCart: (id) => {
-        return get().items.some((item) => item.id === id);
+      updatePrice: (id, newPrice) => {
+        const validatedPrice = Math.max(0, newPrice);
+
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.id === id ? { ...item, price: validatedPrice } : item,
+          ),
+        }));
       },
 
-      getSpareparts: () => {
-        return get().items.filter((item) => item.type === "sparepart");
+      updateQty: (id, newQty) => {
+        const item = get().items.find((i) => i.id === id);
+        if (!item || item.type === "service") return;
+
+        if (newQty <= 0) {
+          get().removeItem(id);
+          return;
+        }
+
+        set((state) => ({
+          items: state.items.map((i) =>
+            i.id === id ? { ...i, qty: newQty } : i,
+          ),
+        }));
       },
 
-      getServices: () => {
-        return get().items.filter((item) => item.type === "service");
+      incrementQty: (id) => {
+        const item = get().items.find((i) => i.id === id);
+        if (!item || item.type === "service") return;
+
+        set((state) => ({
+          items: state.items.map((i) =>
+            i.id === id ? { ...i, qty: i.qty + 1 } : i,
+          ),
+        }));
       },
+
+      decrementQty: (id) => {
+        const item = get().items.find((i) => i.id === id);
+        if (!item || item.type === "service") return;
+
+        if (item.qty <= 1) {
+          get().removeItem(id);
+          return;
+        }
+
+        set((state) => ({
+          items: state.items.map((i) =>
+            i.id === id ? { ...i, qty: i.qty - 1 } : i,
+          ),
+        }));
+      },
+
+      clearCart: () => set({ items: [] }),
+
+      isInCart: (id) => get().items.some((item) => item.id === id),
+
+      getSpareparts: () =>
+        get().items.filter((item) => item.type === "sparepart"),
+
+      getServices: () => get().items.filter((item) => item.type === "service"),
+
+      getItemQty: (id) => {
+        const item = get().items.find((i) => i.id === id);
+        return item ? item.qty : 0;
+      },
+
+      getItemTotalPrice: (id) => {
+        const item = get().items.find((i) => i.id === id);
+        return item ? item.price * item.qty : 0;
+      },
+
+      getSparepartsTotalAmount: () => {
+        return get()
+          .getSpareparts()
+          .reduce((total, item) => total + item.price * item.qty, 0);
+      },
+
+      getServicesTotalAmount: () => {
+        return get()
+          .getServices()
+          .reduce((total, item) => total + item.price * item.qty, 0);
+      },
+
+      getTotalAmount: () =>
+        get().items.reduce((total, item) => total + item.price * item.qty, 0),
     }),
     {
       name: "cashier-cart-storage",

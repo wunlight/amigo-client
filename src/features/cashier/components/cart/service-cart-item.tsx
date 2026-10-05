@@ -9,7 +9,7 @@ function ServiceCartItem({ name, price, onRemove }: ServiceCartItemProps) {
     <div className="flex items-center justify-between py-3">
       <div className="space-y-1">
         <p className="font-medium">{name}</p>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-500">
           {price.toLocaleString("en-US")}
         </p>
       </div>

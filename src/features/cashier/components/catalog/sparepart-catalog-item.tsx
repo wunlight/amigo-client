@@ -1,32 +1,60 @@
 type SparepartCatalogItemProps = {
   name: string;
   price: number;
-  current_stock: number;
+  currentStock: number;
+  cartQty: number;
+
+  addToCart: () => void;
+  increaseQty: () => void;
+  decreaseQty: () => void;
 };
 
 function SparepartCatalogItem({
   name,
   price,
-  current_stock,
+  currentStock,
+  cartQty,
+  addToCart,
+  increaseQty,
+  decreaseQty,
 }: SparepartCatalogItemProps) {
   return (
     <div className="flex justify-between p-3 shrink-0 bg-white border border-slate-300 rounded">
       <div className="flex flex-col gap-1">
         <p className="font-medium">{name}</p>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-500">
           {price.toLocaleString("en-US")}
         </p>
-        <p className="mt-auto text-xs text-slate-600">Stock: {current_stock}</p>
+        <p className="mt-auto text-xs text-slate-500">Stock: {currentStock}</p>
       </div>
-      <div className="flex flex-col gap-2">
-        <button className="grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer">
+      {cartQty > 0 ? (
+        <div className="flex flex-col gap-2">
+          <button
+            className="grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer"
+            onClick={() => increaseQty()}
+          >
+            <span className="icon-[tabler--plus]" />
+          </button>
+          <input
+            type="text"
+            value={cartQty}
+            className="size-6 text-center text-sm"
+          />
+          <button
+            className="grid place-content-center size-6 text-slate-500 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
+            onClick={() => decreaseQty()}
+          >
+            <span className="icon-[tabler--minus]" />
+          </button>
+        </div>
+      ) : (
+        <button
+          className="self-center grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer"
+          onClick={() => addToCart()}
+        >
           <span className="icon-[tabler--plus]" />
         </button>
-        <input type="text" className="size-6 text-center text-sm" />
-        <button className="grid place-content-center size-6 text-slate-600 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer">
-          <span className="icon-[tabler--minus]" />
-        </button>
-      </div>
+      )}
     </div>
   );
 }

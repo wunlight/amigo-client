@@ -1,21 +1,52 @@
-function SparepartCartItem() {
+type SparepartCartItemProps = {
+  name: string;
+  price: number;
+  cartQty: number;
+  totalPrice: number;
+
+  increaseQty: () => void;
+  decreaseQty: () => void;
+};
+
+function SparepartCartItem({
+  name,
+  price,
+  cartQty,
+  totalPrice,
+  increaseQty,
+  decreaseQty,
+}: SparepartCartItemProps) {
   return (
     <div className="flex items-center justify-between py-3">
       <div className="space-y-1">
-        <p className="font-medium">Item Name</p>
-        <p className="text-sm text-slate-600">999,999</p>
+        <p className="font-medium">{name}</p>
+        <p className="text-sm text-slate-500">
+          {price.toLocaleString("en-US")}
+        </p>
       </div>
       <div className="space-y-1">
         <div className="flex gap-3">
-          <button className="grid place-content-center size-6 text-slate-600 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer">
+          <button
+            className="grid place-content-center size-6 text-slate-500 hover:bg-slate-100 border border-slate-300 rounded active:scale-95 transition-transform cursor-pointer"
+            onClick={() => decreaseQty()}
+          >
             <span className="icon-[tabler--minus]" />
           </button>
-          <input type="text" className="size-6 text-center text-sm" />
-          <button className="grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer">
+          <input
+            type="text"
+            value={cartQty}
+            className="size-6 text-center text-sm"
+          />
+          <button
+            className="grid place-content-center size-6 text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer"
+            onClick={() => increaseQty()}
+          >
             <span className="icon-[tabler--plus]" />
           </button>
         </div>
-        <p className="font-medium text-right">999,999</p>
+        <p className="font-medium text-right">
+          {totalPrice.toLocaleString("en-US")}
+        </p>
       </div>
     </div>
   );
