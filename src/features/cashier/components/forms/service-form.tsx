@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { addService } from "../../api";
-import type { ServiceItem } from "../../types/service";
+import { addService } from "../../../services/api";
+import type { Service } from "../../../services/types/service";
 
 type ServiceFormProps = {
   onClose: () => void;
-  onSuccess: (item: ServiceItem) => void;
+  onSuccess: (item: Service) => void;
 };
 
 function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
@@ -17,16 +17,15 @@ function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>, key: string) {
-    const { value } = e.target;
     setFormValue((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: e.target.value,
     }));
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!formValue.title || formValue.price === 0) return;
+    if (!formValue.title || formValue.price <= 0) return;
 
     try {
       const res = await addService({
@@ -65,7 +64,7 @@ function ServiceForm({ onClose, onSuccess }: ServiceFormProps) {
           <input
             type="text"
             placeholder="Enter service title"
-            value={formValue?.title}
+            value={formValue.title}
             onChange={(e) => handleChange(e, "title")}
             required
             className="px-3 h-9 text-sm border border-slate-300 outline-0 rounded"

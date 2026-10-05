@@ -3,7 +3,7 @@ export type AddServicePayload = {
   price: number;
 };
 
-export type ServiceItem = {
+export type Service = {
   id: string;
   title: string;
   price: number;

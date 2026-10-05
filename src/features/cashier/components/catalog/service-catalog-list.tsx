@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { listServices } from "../../api";
+import { listServices } from "../../../services/api";
+import type { Service } from "../../../services/types/service";
 import { useCartStore } from "../../stores/cart-store";
-import type { ServiceItem } from "../../types/service";
 import CreateServiceDialog from "../dialogs/create-service-dialog";
 import ServiceCatalogItem from "./service-catalog-item";
 
 function ServiceCatalogList() {
   const cartStore = useCartStore();
-  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
 
   const selectedServices = services.filter((s) => cartStore.isInCart(s.id));
   const unselectedServices = services.filter((s) => !cartStore.isInCart(s.id));
 
-  function addNewService(item: ServiceItem) {
+  function addNewService(item: Service) {
     setServices((prev) => [...prev, item]);
   }
 
-  function toggleCartItem(service: ServiceItem) {
+  function toggleCartItem(service: Service) {
     if (cartStore.isInCart(service.id)) {
       cartStore.removeItem(service.id);
       return;

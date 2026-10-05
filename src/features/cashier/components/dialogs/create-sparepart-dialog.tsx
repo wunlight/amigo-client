@@ -1,8 +1,13 @@
 import { useState } from "react";
 import DialogLayer from "../../../../components/dialog-layer";
+import type { Sparepart } from "../../../spareparts/types/sparepart";
 import SparepartForm from "../forms/sparepart-form";
 
-function CreateSparepartDialog() {
+type CreateSparepartDialogProps = {
+  onSuccess: (item: Sparepart) => void;
+};
+
+function CreateSparepartDialog({ onSuccess }: CreateSparepartDialogProps) {
   const [showDialog, setShowDialog] = useState<boolean>(false);
 
   function closeDialog() {
@@ -20,7 +25,7 @@ function CreateSparepartDialog() {
       </button>
 
       <DialogLayer show={showDialog}>
-        <SparepartForm onClose={closeDialog} />
+        <SparepartForm onClose={closeDialog} onSuccess={onSuccess} />
       </DialogLayer>
     </>
   );

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import DialogLayer from "../../../../components/dialog-layer";
-import type { ServiceItem } from "../../types/service";
+import type { Service } from "../../../services/types/service";
 import ServiceForm from "../forms/service-form";
 
 type CreateServiceDialogProps = {
-  onSuccess: (item: ServiceItem) => void;
+  onSuccess: (item: Service) => void;
 };
 
 function CreateServiceDialog({ onSuccess }: CreateServiceDialogProps) {
