@@ -9,7 +9,7 @@ function CartItemList() {
     <div className="flex flex-col p-3 h-full divide-y divide-slate-300 overflow-auto">
       {cartStore.items.length <= 0 && (
         <div className="flex flex-col items-center gap-2 my-auto">
-          <span className="icon-[tabler--shopping-cart] text-5xl text-slate-400" />
+          <span className="icon-[tabler--shopping-cart] size-16 text-slate-400" />
           <span className="text-sm text-slate-500">No items in cart</span>
         </div>
       )}

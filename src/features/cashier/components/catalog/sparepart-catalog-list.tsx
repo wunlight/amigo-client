@@ -19,7 +19,17 @@ function SparepartCatalogList() {
   }
 
   useEffect(() => {
-    listSpareparts().then((res) => setSpareparts(res.data));
+    async function fetchCatalog() {
+      const res = await listSpareparts();
+      setSpareparts(res.data);
+    }
+
+    fetchCatalog();
+
+    window.addEventListener("transaction-success", fetchCatalog);
+
+    return () =>
+      window.removeEventListener("transaction-success", fetchCatalog);
   }, []);
 
   return (

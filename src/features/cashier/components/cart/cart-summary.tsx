@@ -30,7 +30,7 @@ function CartSummary({
         </div>
       </div>
       <button
-        className="flex items-center justify-center h-9 text-sm text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
+        className="flex items-center justify-center h-9 font-medium text-sm text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
         disabled={disableCheckout}
         onClick={() => processTransaction()}
       >

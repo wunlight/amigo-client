@@ -13,6 +13,8 @@ function TransactionCart() {
     try {
       await createSale(payload);
       cartStore.clearCart();
+
+      window.dispatchEvent(new Event("transaction-success"));
     } catch (e) {
       console.error(e);
     }
