@@ -43,6 +43,7 @@ function SparepartCatalogList() {
                     id: s.id,
                     name: s.name,
                     price: s.selling_price,
+                    stock: s.stock,
                     qty: 1,
                     type: "sparepart",
                   })
@@ -69,6 +70,7 @@ function SparepartCatalogList() {
                     id: s.id,
                     name: s.name,
                     price: s.selling_price,
+                    stock: s.stock,
                     qty: 1,
                     type: "sparepart",
                   })
