@@ -4,6 +4,7 @@ type SparepartCartItemProps = {
   cartQty: number;
   totalPrice: number;
 
+  updatePrice: (newPrice: number) => void;
   increaseQty: () => void;
   decreaseQty: () => void;
 };
@@ -13,6 +14,7 @@ function SparepartCartItem({
   price,
   cartQty,
   totalPrice,
+  updatePrice,
   increaseQty,
   decreaseQty,
 }: SparepartCartItemProps) {
@@ -20,9 +22,15 @@ function SparepartCartItem({
     <div className="flex items-center justify-between py-3">
       <div className="space-y-1">
         <p className="font-medium">{name}</p>
-        <p className="text-sm text-slate-500">
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => updatePrice(Number(e.target.value))}
+          className="w-40 text-sm text-slate-500 focus:outline-1 outline-slate-300 rounded"
+        />
+        {/* <p className="text-sm text-slate-500">
           {price.toLocaleString("en-US")}
-        </p>
+        </p> */}
       </div>
       <div className="space-y-1">
         <div className="flex gap-3">

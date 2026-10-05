@@ -21,6 +21,7 @@ function CartItemList() {
           price={s.price}
           cartQty={cartStore.getItemQty(s.id)}
           totalPrice={cartStore.getItemTotalPrice(s.id)}
+          updatePrice={(newPrice) => cartStore.updatePrice(s.id, newPrice)}
           increaseQty={() => cartStore.incrementQty(s.id)}
           decreaseQty={() => cartStore.decrementQty(s.id)}
         />
@@ -31,6 +32,7 @@ function CartItemList() {
           key={s.id}
           name={s.name}
           price={s.price}
+          updatePrice={(newPrice) => cartStore.updatePrice(s.id, newPrice)}
           onRemove={() => cartStore.removeItem(s.id)}
         />
       ))}
