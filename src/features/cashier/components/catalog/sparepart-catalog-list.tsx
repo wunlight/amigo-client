@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { listSpareparts } from "../../../spareparts/api";
 import type { Sparepart } from "../../../spareparts/types/sparepart";
+import { adjustStock } from "../../api/stock";
 import { useCartStore } from "../../stores/cart-store";
 import CreateSparepartDialog from "../dialogs/create-sparepart-dialog";
 import SparepartCatalogItem from "./sparepart-catalog-item";
@@ -16,6 +17,33 @@ function SparepartCatalogList() {
 
   function addNewSparepart(item: Sparepart) {
     setSpareparts((prev) => [...prev, item]);
+  }
+
+  async function updateStock(id: string, newStock: number) {
+    if (newStock <= 0) return;
+
+    try {
+      const res = await adjustStock({
+        sparepart_id: id,
+        quantity: newStock,
+        stock_direction: "IN",
+        notes: "Quick update stock from cashier",
+      });
+
+      const updatedStock = res.data.sparepart.current_stock;
+
+      setSpareparts((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, stock: updatedStock } : item,
+        ),
+      );
+
+      if (cartStore.isInCart(id)) {
+        cartStore.updateItemStock(id, updatedStock);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   useEffect(() => {
@@ -58,7 +86,7 @@ function SparepartCatalogList() {
                     type: "sparepart",
                   })
                 }
-                // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
+                updateStock={(newStock) => updateStock(s.id, newStock)}
                 increaseQty={() => cartStore.incrementQty(s.id)}
                 decreaseQty={() => cartStore.decrementQty(s.id)}
               />
@@ -86,7 +114,7 @@ function SparepartCatalogList() {
                     type: "sparepart",
                   })
                 }
-                // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
+                updateStock={(newStock) => updateStock(s.id, newStock)}
                 increaseQty={() => cartStore.incrementQty(s.id)}
                 decreaseQty={() => cartStore.decrementQty(s.id)}
               />
