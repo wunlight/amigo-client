@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { listServices } from "../../../services/api";
 import type { Service } from "../../../services/types/service";
 import { useCartStore } from "../../stores/cart-store";
-import CreateServiceDialog from "../dialogs/create-service-dialog";
+import CreateItemDialog from "../dialogs/create-item-dialog";
+import ServiceForm from "../forms/service-form";
 import ServiceCatalogItem from "./service-catalog-item";
 
 function ServiceCatalogList() {
@@ -41,7 +42,11 @@ function ServiceCatalogList() {
       <div className="flex flex-col gap-3 w-full">
         <div className="flex items-center justify-between">
           <h6 className="font-medium text-lg">Services</h6>
-          <CreateServiceDialog onSuccess={addNewService} />
+          <CreateItemDialog label="Add New Services">
+            {(close) => (
+              <ServiceForm onClose={close} onSuccess={addNewService} />
+            )}
+          </CreateItemDialog>
         </div>
         <div className="min-w-0 w-full overflow-x-auto">
           <div className="flex gap-3">

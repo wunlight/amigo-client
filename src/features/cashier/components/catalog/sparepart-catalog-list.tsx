@@ -3,7 +3,8 @@ import { listSpareparts } from "../../../spareparts/api";
 import type { Sparepart } from "../../../spareparts/types/sparepart";
 import { adjustStock } from "../../api/stock";
 import { useCartStore } from "../../stores/cart-store";
-import CreateSparepartDialog from "../dialogs/create-sparepart-dialog";
+import CreateItemDialog from "../dialogs/create-item-dialog";
+import SparepartForm from "../forms/sparepart-form";
 import SparepartCatalogItem from "./sparepart-catalog-item";
 
 function SparepartCatalogList() {
@@ -63,7 +64,11 @@ function SparepartCatalogList() {
       <div className="flex flex-col gap-3 h-full overflow-hidden">
         <div className="flex items-center justify-between">
           <h6 className="font-medium text-lg">Spareparts</h6>
-          <CreateSparepartDialog onSuccess={addNewSparepart} />
+          <CreateItemDialog label="Add New Spareparts">
+            {(close) => (
+              <SparepartForm onClose={close} onSuccess={addNewSparepart} />
+            )}
+          </CreateItemDialog>
         </div>
         <div className="min-h-0 h-full overflow-y-auto">
           <div className="grid grid-cols-4 gap-3">
