@@ -1,5 +1,5 @@
 export type CheckoutItemInput = {
-  item_id: string;
+  id: string;
   type: "sparepart" | "service";
   price: number;
   qty: number;

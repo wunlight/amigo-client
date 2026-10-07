@@ -178,7 +178,7 @@ export const useCartStore = create<CartState>()(
         return {
           total_amount: getTotalAmount(),
           items: items.map((item) => ({
-            item_id: item.id,
+            id: item.id,
             type: item.type,
             price: item.price,
             qty: item.qty,
