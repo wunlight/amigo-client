@@ -5,10 +5,6 @@ import type { CheckoutResponse } from "../../types/checkout";
 import InvoiceDialog from "../dialogs/invoice-dialog";
 import CartItemList from "./cart-item-list";
 
-// TODO: MODULARIZATION - TransactionCart orchestrates multiple sub-components
-// Consider: Extract transaction logic (processTransaction) to a custom hook
-// useTransaction(cartStore) -> { processTransaction, lastTransactionData, showInvoiceDialog }
-// This would reduce component complexity and improve testability
 function TransactionCart() {
   const cartStore = useCartStore();
 

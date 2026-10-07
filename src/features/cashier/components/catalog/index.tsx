@@ -1,9 +1,6 @@
 import ServiceCatalogList from "./service-catalog-list";
 import SparepartCatalogList from "./sparepart-catalog-list";
 
-// TODO: MODULARIZATION - CatalogList combines header + two catalog lists
-// Consider: If adding more catalog types, create a CatalogSection component
-// that accepts list of { title, listComponent } to avoid repeating pattern
 function CatalogList() {
   return (
     <div className="flex flex-col gap-6 py-3 h-full w-full">

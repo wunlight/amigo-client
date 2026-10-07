@@ -69,7 +69,7 @@ function CartItem(props: CartItemProps) {
               </button>
             </div>
             <p className="font-medium text-right">
-              {/*.toLocaleString("en-US")*/}
+              {(props.price * props.quantity).toLocaleString("en-US")}
             </p>
           </>
         )}

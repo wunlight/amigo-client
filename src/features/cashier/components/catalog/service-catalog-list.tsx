@@ -29,7 +29,7 @@ function ServiceCatalogList() {
       price: service.price,
       qty: 1,
       type: "service",
-      stock: 0,
+      availableStock: 0,
     });
   }
 
