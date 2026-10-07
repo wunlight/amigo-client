@@ -1,5 +1,4 @@
 import { useState } from "react";
-import DialogLayer from "../../../../components/dialog-layer";
 import type { CheckoutResponse } from "../../types/checkout";
 
 type InvoiceDialogProps = {
@@ -56,7 +55,7 @@ Terima kasih telah melakukan transaksi!`;
   }
 
   return (
-    <DialogLayer show={true}>
+    <div className="fixed inset-0 z-999 grid place-content-center bg-slate-950/15 backdrop-blur-xs">
       <div className="flex flex-col gap-4 p-4 bg-white rounded-md">
         <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-300">
           <h6 className="font-medium text-lg">Generate Invoice</h6>
@@ -99,7 +98,7 @@ Terima kasih telah melakukan transaksi!`;
           </button>
         </div>
       </div>
-    </DialogLayer>
+    </div>
   );
 }
 
