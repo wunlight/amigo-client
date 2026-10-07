@@ -6,7 +6,7 @@ export type CartItem = {
   id: string;
   name: string;
   price: number;
-  stock: number;
+  availableStock: number;
   qty: number;
   type: "sparepart" | "service";
 };
@@ -17,7 +17,7 @@ interface CartState {
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
   updatePrice: (id: string, newPrice: number) => void;
-  updateItemStock: (id: string, newStock: number) => void;
+  updateAvailableStock: (id: string, newStock: number) => void;
   updateQty: (id: string, qty: number) => void;
   incrementQty: (id: string) => void;
   decrementQty: (id: string) => void;
@@ -28,7 +28,7 @@ interface CartState {
   getServices: () => CartItem[];
 
   getItemQty: (id: string) => number;
-  getItemTotalPrice: (id: string) => number;
+  getItemSubtotal: (id: string) => number;
   getSparepartsTotalAmount: () => number;
   getServicesTotalAmount: () => number;
   getTotalAmount: () => number;
@@ -87,10 +87,10 @@ export const useCartStore = create<CartState>()(
         }));
       },
 
-      updateItemStock(id, newStock) {
+      updateAvailableStock(id, newStock) {
         set((state) => ({
           items: state.items.map((item) =>
-            item.id === id ? { ...item, stock: newStock } : item,
+            item.id === id ? { ...item, availableStock: newStock } : item,
           ),
         }));
       },
@@ -152,7 +152,7 @@ export const useCartStore = create<CartState>()(
         return item ? item.qty : 0;
       },
 
-      getItemTotalPrice: (id) => {
+      getItemSubtotal: (id) => {
         const item = get().items.find((i) => i.id === id);
         return item ? item.price * item.qty : 0;
       },

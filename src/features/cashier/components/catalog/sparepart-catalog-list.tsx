@@ -38,7 +38,7 @@ function SparepartCatalogList() {
       );
 
       if (cartStore.isInCart(id)) {
-        cartStore.updateItemStock(id, updatedStock);
+        cartStore.updateAvailableStock(id, updatedStock);
       }
     } catch (e) {
       console.error(e);
@@ -84,7 +84,7 @@ function SparepartCatalogList() {
                     id: s.id,
                     name: s.name,
                     price: s.selling_price,
-                    stock: s.stock,
+                    availableStock: s.stock,
                     qty: 1,
                     type: "sparepart",
                   })
@@ -111,7 +111,7 @@ function SparepartCatalogList() {
                     id: s.id,
                     name: s.name,
                     price: s.selling_price,
-                    stock: s.stock,
+                    availableStock: s.stock,
                     qty: 1,
                     type: "sparepart",
                   })
