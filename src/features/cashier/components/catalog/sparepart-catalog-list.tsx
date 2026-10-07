@@ -10,10 +10,8 @@ function SparepartCatalogList() {
   const cartStore = useCartStore();
   const [spareparts, setSpareparts] = useState<Sparepart[]>([]);
 
-  const selectedSpareparts = spareparts.filter((s) => cartStore.isInCart(s.id));
-  const unselectedSpareparts = spareparts.filter(
-    (s) => !cartStore.isInCart(s.id),
-  );
+  const inCartSpareparts = spareparts.filter((s) => cartStore.isInCart(s.id));
+  const sparepartsCatalog = spareparts.filter((s) => !cartStore.isInCart(s.id));
 
   function addNewSparepart(item: Sparepart) {
     setSpareparts((prev) => [...prev, item]);
@@ -69,12 +67,12 @@ function SparepartCatalogList() {
         </div>
         <div className="min-h-0 h-full overflow-y-auto">
           <div className="grid grid-cols-4 gap-3">
-            {selectedSpareparts.map((s) => (
+            {inCartSpareparts.map((s) => (
               <SparepartCatalogItem
                 key={s.id}
                 name={s.name}
                 price={s.selling_price}
-                currentStock={s.stock}
+                availableStock={s.stock}
                 cartQty={cartStore.getItemQty(s.id)}
                 addToCart={() =>
                   cartStore.addItem({
@@ -92,17 +90,16 @@ function SparepartCatalogList() {
               />
             ))}
 
-            {selectedSpareparts.length > 0 &&
-              unselectedSpareparts.length > 0 && (
-                <div className="col-span-full h-px bg-slate-300" />
-              )}
+            {inCartSpareparts.length > 0 && sparepartsCatalog.length > 0 && (
+              <div className="col-span-full h-px bg-slate-300" />
+            )}
 
-            {unselectedSpareparts.map((s) => (
+            {sparepartsCatalog.map((s) => (
               <SparepartCatalogItem
                 key={s.id}
                 name={s.name}
                 price={s.selling_price}
-                currentStock={s.stock}
+                availableStock={s.stock}
                 cartQty={cartStore.getItemQty(s.id)}
                 addToCart={() =>
                   cartStore.addItem({

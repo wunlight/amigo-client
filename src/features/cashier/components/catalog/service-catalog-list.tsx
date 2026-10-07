@@ -9,8 +9,8 @@ function ServiceCatalogList() {
   const cartStore = useCartStore();
   const [services, setServices] = useState<Service[]>([]);
 
-  const selectedServices = services.filter((s) => cartStore.isInCart(s.id));
-  const unselectedServices = services.filter((s) => !cartStore.isInCart(s.id));
+  const inCartServices = services.filter((s) => cartStore.isInCart(s.id));
+  const servicesCatalog = services.filter((s) => !cartStore.isInCart(s.id));
 
   function addNewService(item: Service) {
     setServices((prev) => [...prev, item]);
@@ -28,6 +28,7 @@ function ServiceCatalogList() {
       price: service.price,
       qty: 1,
       type: "service",
+      stock: 0,
     });
   }
 
@@ -44,39 +45,29 @@ function ServiceCatalogList() {
         </div>
         <div className="min-w-0 w-full overflow-x-auto">
           <div className="flex gap-3">
-            {selectedServices.map((s) => (
+            {inCartServices.map((s) => (
               <ServiceCatalogItem
                 key={s.id}
                 title={s.title}
                 price={s.price}
-                isSelected={true}
+                inCart={true}
                 onClick={() => toggleCartItem(s)}
               />
             ))}
 
-            {selectedServices.length > 0 && unselectedServices.length > 0 && (
+            {inCartServices.length > 0 && servicesCatalog.length > 0 && (
               <div className="w-px bg-slate-300 shrink-0" />
             )}
 
-            {unselectedServices.map((s) => (
+            {servicesCatalog.map((s) => (
               <ServiceCatalogItem
                 key={s.id}
                 title={s.title}
                 price={s.price}
-                isSelected={false}
+                inCart={false}
                 onClick={() => toggleCartItem(s)}
               />
             ))}
-
-            {/* {services.map((s) => (
-              <ServiceCatalogItem
-                key={s.id}
-                title={s.title}
-                price={s.price}
-                isSelected={cartStore.isInCart(s.id)}
-                onClick={() => toggleCartItem(s)}
-              />
-            ))} */}
           </div>
         </div>
       </div>

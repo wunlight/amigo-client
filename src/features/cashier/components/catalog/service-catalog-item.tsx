@@ -1,14 +1,14 @@
 type ServiceCatalogItemProps = {
   title: string;
   price: number;
-  isSelected: boolean;
+  inCart: boolean;
   onClick: () => void;
 };
 
 function ServiceCatalogItem({
   title,
   price,
-  isSelected,
+  inCart,
   onClick,
 }: ServiceCatalogItemProps) {
   return (
@@ -19,7 +19,7 @@ function ServiceCatalogItem({
           {price.toLocaleString("en-US")}
         </p>
       </div>
-      {isSelected ? (
+      {inCart ? (
         <button
           className="grid place-content-center size-6 text-red-500 hover:bg-red-100 border border-red-500 rounded active:scale-95 transition-transform cursor-pointer"
           onClick={() => onClick()}

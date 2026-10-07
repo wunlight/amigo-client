@@ -1,7 +1,7 @@
-import CashierPage from "./pages/cashier-page";
+import CashierView from "./features/cashier/views/cashier-view";
 
 function App() {
-  return <CashierPage />;
+  return <CashierView />;
 }
 
 export default App;

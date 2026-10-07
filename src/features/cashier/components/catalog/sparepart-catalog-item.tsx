@@ -1,9 +1,15 @@
 import { useState } from "react";
 
+// TODO: MODULARIZATION - SparepartCatalogItemProps and SparepartCartItemProps share many fields
+// Consider extracting common interface to: src/features/cashier/types/catalog-item.ts
+// Common fields: name, price, availableStock, cartQty, increaseQty, decreaseQty, updatePrice
+// SparepartCatalogItem adds: updateStock, addToCart
+// SparepartCartItem adds: updatePrice, totalPrice (derived)
+
 type SparepartCatalogItemProps = {
   name: string;
   price: number;
-  currentStock: number;
+  availableStock: number;
   cartQty: number;
 
   updateStock: (newStock: number) => void;
@@ -15,7 +21,7 @@ type SparepartCatalogItemProps = {
 function SparepartCatalogItem({
   name,
   price,
-  currentStock,
+  availableStock,
   cartQty,
   updateStock,
   addToCart,
@@ -54,7 +60,7 @@ function SparepartCatalogItem({
             title="Klik untuk tambah stok barang masuk"
             className="shrink-0 text-xs text-slate-500 cursor-pointer hover:text-slate-800 hover:underline select-none"
           >
-            Stock: {currentStock}
+            Stock: {availableStock}
           </p>
 
           {isEditing && (
@@ -88,7 +94,7 @@ function SparepartCatalogItem({
         <div className="shrink-0 flex flex-col gap-2">
           <button
             className="grid place-content-center size-6 text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
-            disabled={cartQty >= currentStock}
+            disabled={cartQty >= availableStock}
             onClick={() => increaseQty()}
           >
             <span className="icon-[tabler--plus]" />
@@ -105,7 +111,7 @@ function SparepartCatalogItem({
       ) : (
         <button
           className="shrink-0 self-center grid place-content-center size-6 text-white bg-indigo-500 not-disabled:hover:bg-indigo-600 rounded disabled:opacity-75 not-disabled:active:scale-95 transition-transform cursor-pointer disabled:cursor-not-allowed"
-          disabled={currentStock <= 0}
+          disabled={availableStock <= 0}
           onClick={() => addToCart()}
         >
           <span className="icon-[tabler--plus]" />
