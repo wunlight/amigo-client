@@ -2,17 +2,32 @@ import { useEffect, useState } from "react";
 import { listSpareparts } from "../../../spareparts/api";
 import type { Sparepart } from "../../../spareparts/types/sparepart";
 import { adjustStock } from "../../api/stock";
+import useCatalogFilter from "../../hooks/use-catalog-filter";
 import { useCartStore } from "../../stores/cart-store";
 import CreateItemDialog from "../dialogs/create-item-dialog";
 import SparepartForm from "../forms/sparepart-form";
 import SparepartCatalogItem from "./sparepart-catalog-item";
 
-function SparepartCatalogList() {
+type SparepartCatalogListProps = {
+  searchQuery: string;
+};
+
+function SparepartCatalogList({ searchQuery }: SparepartCatalogListProps) {
   const cartStore = useCartStore();
   const [spareparts, setSpareparts] = useState<Sparepart[]>([]);
 
-  const inCartSpareparts = spareparts.filter((s) => cartStore.isInCart(s.id));
-  const sparepartsCatalog = spareparts.filter((s) => !cartStore.isInCart(s.id));
+  const filteredSpareparts = useCatalogFilter(
+    spareparts,
+    searchQuery,
+    (sparepart) => sparepart.name,
+  );
+
+  const inCartSpareparts = filteredSpareparts.filter((s) =>
+    cartStore.isInCart(s.id),
+  );
+  const sparepartsCatalog = filteredSpareparts.filter(
+    (s) => !cartStore.isInCart(s.id),
+  );
 
   function addNewSparepart(item: Sparepart) {
     setSpareparts((prev) => [...prev, item]);

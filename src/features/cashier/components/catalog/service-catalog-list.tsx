@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react";
 import { listServices } from "../../../services/api";
 import type { Service } from "../../../services/types/service";
+import useCatalogFilter from "../../hooks/use-catalog-filter";
 import { useCartStore } from "../../stores/cart-store";
 import CreateItemDialog from "../dialogs/create-item-dialog";
 import ServiceForm from "../forms/service-form";
 import ServiceCatalogItem from "./service-catalog-item";
 
-function ServiceCatalogList() {
+type ServiceCatalogList = {
+  searchQuery: string;
+};
+
+function ServiceCatalogList({ searchQuery }: ServiceCatalogList) {
   const cartStore = useCartStore();
   const [services, setServices] = useState<Service[]>([]);
 
-  const inCartServices = services.filter((s) => cartStore.isInCart(s.id));
-  const servicesCatalog = services.filter((s) => !cartStore.isInCart(s.id));
+  const filteredServices = useCatalogFilter(
+    services,
+    searchQuery,
+    (service) => service.title,
+  );
+
+  const inCartServices = filteredServices.filter((s) =>
+    cartStore.isInCart(s.id),
+  );
+  const servicesCatalog = filteredServices.filter(
+    (s) => !cartStore.isInCart(s.id),
+  );
 
   function addNewService(item: Service) {
     setServices((prev) => [...prev, item]);
