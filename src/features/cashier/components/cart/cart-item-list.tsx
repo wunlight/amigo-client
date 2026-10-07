@@ -1,6 +1,5 @@
 import { useCartStore } from "../../stores/cart-store";
-import ServiceCartItem from "./service-cart-item";
-import SparepartCartItem from "./sparepart-cart-item";
+import CartItem from "./cart-item";
 
 function CartItemList() {
   const cartStore = useCartStore();
@@ -14,28 +13,17 @@ function CartItemList() {
         </div>
       )}
 
-      {cartStore.getSpareparts().map((s) => (
-        <SparepartCartItem
-          key={s.id}
-          name={s.name}
-          price={s.price}
-          currentStock={s.stock}
-          cartQty={cartStore.getItemQty(s.id)}
-          totalPrice={cartStore.getItemTotalPrice(s.id)}
-          updatePrice={(newPrice) => cartStore.updatePrice(s.id, newPrice)}
-          // updateQty={(newQty) => cartStore.updateQty(s.id, newQty)}
-          increaseQty={() => cartStore.incrementQty(s.id)}
-          decreaseQty={() => cartStore.decrementQty(s.id)}
-        />
-      ))}
-
-      {cartStore.getServices().map((s) => (
-        <ServiceCartItem
-          key={s.id}
-          name={s.name}
-          price={s.price}
-          updatePrice={(newPrice) => cartStore.updatePrice(s.id, newPrice)}
-          onRemove={() => cartStore.removeItem(s.id)}
+      {cartStore.items.map((i) => (
+        <CartItem
+          name={i.name}
+          price={i.price}
+          updatePrice={(newPrice) => cartStore.updatePrice(i.id, newPrice)}
+          removeItem={() => cartStore.removeItem(i.id)}
+          type={i.type}
+          currentStock={i.stock}
+          quantity={cartStore.getItemQty(i.id)}
+          increaseQty={() => cartStore.incrementQty(i.id)}
+          decreaseQty={() => cartStore.decrementQty(i.id)}
         />
       ))}
     </div>
