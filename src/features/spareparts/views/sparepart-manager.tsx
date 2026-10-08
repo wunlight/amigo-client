@@ -11,7 +11,7 @@ function SparepartManager() {
         <h6 className="font-medium text-xl">Sparepart Manager</h6>
       </div>
 
-      <div className="flex flex-col gap-4 p-3 min-h-0 h-full bg-white rounded overflow-auto">
+      <div className="flex flex-col gap-4 p-3 min-h-0 max-h-full bg-white rounded overflow-auto">
         <div className="flex gap-3">
           <input
             type="text"
