@@ -47,9 +47,9 @@ function SparepartCatalogItem({
   };
 
   return (
-    <div className="flex justify-between gap-4 p-3 shrink-0 bg-white border border-slate-300 rounded">
-      <div className="flex flex-col gap-1">
-        <p className="font-medium">{name}</p>
+    <div className="flex justify-between gap-3 p-3 shrink-0 bg-white border border-slate-300 rounded">
+      <div className="flex flex-col gap-1 overflow-hidden">
+        <p className="w-full font-medium truncate">{name}</p>
         <p className="text-sm text-slate-500">
           {price.toLocaleString("en-US")}
         </p>
