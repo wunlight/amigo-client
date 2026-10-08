@@ -45,19 +45,19 @@ function TransactionCart() {
 
       <div className="flex flex-col gap-3 py-3">
         <div className="flex flex-col gap-3">
-          <div className="flex justify-between text-slate-500">
+          <div className="flex justify-between text-sm text-slate-500">
             <p>Sparepart Total</p>
             <p>
               Rp. {cartStore.getSparepartsTotalAmount().toLocaleString("en-US")}
             </p>
           </div>
-          <div className="flex justify-between text-slate-500">
+          <div className="flex justify-between text-sm text-slate-500">
             <p>Service Total</p>
             <p>
               Rp. {cartStore.getServicesTotalAmount().toLocaleString("en-US")}
             </p>
           </div>
-          <div className="flex justify-between font-medium">
+          <div className="flex justify-between font-medium text-sm">
             <p>Grand Total</p>
             <p>Rp. {cartStore.getTotalAmount().toLocaleString("en-US")}</p>
           </div>

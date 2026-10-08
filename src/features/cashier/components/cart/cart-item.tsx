@@ -21,9 +21,9 @@ export type CartItemProps = ServiceCartItemProps | SparepartCartItemProps;
 
 function CartItem(props: CartItemProps) {
   return (
-    <div className="flex items-center justify-between py-2">
-      <div className="space-y-1">
-        <p className="font-medium">{props.name}</p>
+    <div className="flex items-center justify-between gap-3 py-3">
+      <div className="flex flex-col gap-1 overflow-hidden">
+        <p className="w-full font-medium truncate">{props.name}</p>
         <input
           type="text"
           value={props.price}
