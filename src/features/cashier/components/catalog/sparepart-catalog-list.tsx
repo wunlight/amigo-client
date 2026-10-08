@@ -31,6 +31,15 @@ function SparepartCatalogList({ searchQuery }: SparepartCatalogListProps) {
 
   function addNewSparepart(item: Sparepart) {
     setSpareparts((prev) => [...prev, item]);
+    if (item.stock > 0)
+      cartStore.addItem({
+        id: item.id,
+        name: item.name,
+        price: item.selling_price,
+        availableStock: item.stock,
+        qty: 1,
+        type: "sparepart",
+      });
   }
 
   async function updateStock(id: string, newStock: number) {

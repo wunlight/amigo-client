@@ -30,6 +30,14 @@ function ServiceCatalogList({ searchQuery }: ServiceCatalogList) {
 
   function addNewService(item: Service) {
     setServices((prev) => [...prev, item]);
+    cartStore.addItem({
+      id: item.id,
+      name: item.title,
+      price: item.price,
+      availableStock: 0,
+      qty: 1,
+      type: "service",
+    });
   }
 
   function toggleCartItem(service: Service) {
