@@ -13,3 +13,8 @@ export type Sparepart = {
   created_at: string;
   updated_at: string;
 };
+
+export type UpdateSparepartPayload = {
+  name: string;
+  selling_price: number;
+};
