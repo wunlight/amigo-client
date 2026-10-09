@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MenuDrawer from "../../../components/menu-drawer";
 import { listSpareparts } from "../api";
+import DeleteDialog from "../components/delete-dialog";
 import FormDialog from "../components/form-dialog";
 import type { Sparepart } from "../types/sparepart";
 
@@ -15,6 +16,11 @@ function SparepartManager() {
     }
 
     fetchSpareparts();
+
+    window.addEventListener("refresh-spareparts", fetchSpareparts);
+
+    return () =>
+      window.removeEventListener("refresh-spareparts", fetchSpareparts);
   });
 
   return (
@@ -94,9 +100,7 @@ function SparepartManager() {
                       }}
                     />
 
-                    <button className="grid place-content-center size-8 text-red-500 hover:bg-red-100 border border-red-300 rounded-full active:scale-95 transition-transform cursor-pointer">
-                      <span className="icon-[tabler--trash]" />
-                    </button>
+                    <DeleteDialog name={s.name} />
                   </div>
                 </td>
               </tr>

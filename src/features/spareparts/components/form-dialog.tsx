@@ -48,20 +48,22 @@ function FormDialog({ trigger, dialogTitle, defaultValue }: FormDialogProps) {
       return;
 
     try {
-      const res =
-        defaultValue && defaultValue.id
-          ? await updateSparepart(defaultValue.id, {
-              name: formValue.name,
-              selling_price: formValue.selling_price,
-            })
-          : await initSparepart({
-              name: formValue.name,
-              selling_price: formValue.selling_price,
-              initial_stock: formValue.initial_stock,
-            });
+      if (defaultValue && defaultValue.id) {
+        await updateSparepart(defaultValue.id, {
+          name: formValue.name,
+          selling_price: formValue.selling_price,
+        });
+      } else {
+        await initSparepart({
+          name: formValue.name,
+          selling_price: formValue.selling_price,
+          initial_stock: formValue.initial_stock,
+        });
+      }
 
       close();
-      console.log(res);
+
+      window.dispatchEvent(new Event("refresh-spareparts"));
     } catch (e) {
       console.error("failed to submit the sparepart: ", e);
     }
