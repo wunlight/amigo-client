@@ -76,7 +76,7 @@ function FormDialog({ trigger, dialogTitle, defaultValue }: FormDialogProps) {
       {show && (
         <div className="fixed inset-0 z-999 grid place-content-center bg-slate-950/15 backdrop-blur-xs">
           <div className="flex flex-col p-4 bg-white rounded">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-300">
               <h6 className="font-medium text-lg">{dialogTitle}</h6>
               <button
                 className="grid place-content-center size-9 hover:bg-slate-100 rounded-full active:scale-95 transition-all cursor-pointer"
