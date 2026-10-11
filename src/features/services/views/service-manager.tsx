@@ -70,7 +70,7 @@ function ServiceManager() {
           </thead>
           <tbody>
             {services.map((s, idx) => (
-              <tr className="not-last:border-b border-slate-300">
+              <tr key={s.id} className="not-last:border-b border-slate-300">
                 <td className="px-3 h-14 font-normal text-center">{idx + 1}</td>
                 <td className="px-3 h-14 font-normal text-left">{s.title}</td>
                 <td className="px-3 h-14 font-normal text-left">
