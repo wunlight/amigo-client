@@ -1,8 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuDrawer from "../../../components/menu-drawer";
+import { listServices } from "../api";
+import DeleteDialog from "../components/delete-dialog";
+import FormDialog from "../components/form-dialog";
+import type { Service } from "../types/service";
 
 function ServiceManager() {
+  const [services, setServices] = useState<Service[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+
+  useEffect(() => {
+    async function fetchServices() {
+      const res = await listServices();
+      setServices(res.data);
+    }
+
+    fetchServices();
+
+    window.addEventListener("refresh-services", fetchServices);
+
+    return () => window.removeEventListener("refresh-services", fetchServices);
+  });
 
   return (
     <div className="flex flex-col gap-4 p-3 h-dvh bg-slate-200">
@@ -21,10 +39,18 @@ function ServiceManager() {
             className="px-3 h-9 w-52 text-sm bg-white border border-slate-300 outline-0 rounded"
           />
           <div className="mr-auto"></div>
-          <button className="flex items-center gap-2 px-3 h-9 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer">
-            <span className="icon-[tabler--plus]" />
-            <span>Add New Service</span>
-          </button>
+          <FormDialog
+            trigger={(open) => (
+              <button
+                className="flex items-center gap-2 px-3 h-9 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded active:scale-95 transition-transform cursor-pointer"
+                onClick={() => open()}
+              >
+                <span className="icon-[tabler--plus]" />
+                <span>Add New Service</span>
+              </button>
+            )}
+            dialogTitle="Add New Service"
+          ></FormDialog>
         </div>
 
         <table className="w-full text-sm">
@@ -43,21 +69,37 @@ function ServiceManager() {
             </tr>
           </thead>
           <tbody>
-            <tr className="not-last:border-b border-slate-300">
-              <td className="px-3 h-14 font-normal text-center">1</td>
-              <td className="px-3 h-14 font-normal text-left">Item Name</td>
-              <td className="px-3 h-14 font-normal text-left">Rp. 999,999</td>
-              <td className="px-3 h-14">
-                <div className="flex items-center justify-end gap-3">
-                  <button className="grid place-content-center size-8 text-slate-500 hover:bg-slate-100 border border-slate-300 rounded-full cursor-pointer">
-                    <span className="icon-[tabler--pencil]" />
-                  </button>
-                  <button className="grid place-content-center size-8 text-red-500 hover:bg-red-100 border border-red-300 rounded-full cursor-pointer">
-                    <span className="icon-[tabler--trash]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {services.map((s, idx) => (
+              <tr className="not-last:border-b border-slate-300">
+                <td className="px-3 h-14 font-normal text-center">{idx + 1}</td>
+                <td className="px-3 h-14 font-normal text-left">{s.title}</td>
+                <td className="px-3 h-14 font-normal text-left">
+                  Rp. {s.price.toLocaleString("en-US")}
+                </td>
+                <td className="px-3 h-14">
+                  <div className="flex items-center justify-end gap-3">
+                    <FormDialog
+                      trigger={(open) => (
+                        <button
+                          className="grid place-content-center size-8 text-slate-500 hover:bg-slate-100 border border-slate-300 rounded-full cursor-pointer"
+                          onClick={() => open()}
+                        >
+                          <span className="icon-[tabler--pencil]" />
+                        </button>
+                      )}
+                      dialogTitle="Edit Service"
+                      defaultValue={{
+                        id: s.id,
+                        title: s.title,
+                        price: s.price,
+                      }}
+                    ></FormDialog>
+
+                    <DeleteDialog title={s.title} />
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

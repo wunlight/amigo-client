@@ -10,3 +10,8 @@ export type Service = {
   created_at: string;
   updated_at: string;
 };
+
+export type UpdateServicePayload = {
+  title: string;
+  price: number;
+};
