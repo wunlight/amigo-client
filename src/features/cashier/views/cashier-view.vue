@@ -39,11 +39,11 @@ import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
           <span class="text-sm text-zinc-500">Rp. 999,999</span>
         </div>
         <div class="flex justify-between">
-          <span class="font-bold">Total</span>
-          <span class="font-bold">Rp. 999,999</span>
+          <span class="text-sm font-bold">Total</span>
+          <span class="text-sm font-bold">Rp. 999,999</span>
         </div>
         <div class="flex gap-3">
-          <Button label="Process Transaction" fluid />
+          <Button label="Process Transaction" fluid class="text-sm!" />
           <Button icon="icon-[tabler--note]" severity="secondary" class="shrink-0" />
         </div>
       </div>

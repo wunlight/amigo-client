@@ -49,8 +49,8 @@ onUpdated(() => {
       :class="[
         'absolute pointer-events-none grid place-content-center z-10 transition-opacity duration-300',
         direction === 'vertical'
-          ? 'top-0 left-0 right-0 h-12 bg-linear-to-b from-zinc-950 via-zinc-950/75 to-transparent'
-          : 'top-0 bottom-0 left-0 w-12 bg-linear-to-r from-zinc-950 via-zinc-950/75 to-transparent',
+          ? 'top-0 left-0 right-0 h-12 bg-linear-to-b from-zinc-300 dark:from-zinc-950 via-zinc-300/75 dark:via-zinc-950/75 to-transparent'
+          : 'top-0 bottom-0 left-0 w-12 bg-linear-to-r from-zinc-300 dark:from-zinc-950 via-zinc-300/75 dark:via-zinc-950/75 to-transparent',
       ]"
     >
       <span
@@ -78,8 +78,8 @@ onUpdated(() => {
       :class="[
         'absolute pointer-events-none grid place-content-center z-10 transition-opacity duration-300',
         direction === 'vertical'
-          ? 'bottom-0 left-0 right-0 h-12 bg-linear-to-t from-zinc-950 via-zinc-950/75 to-transparent'
-          : 'top-0 bottom-0 right-0 w-12 bg-linear-to-l from-zinc-950 via-zinc-950/75 to-transparent',
+          ? 'bottom-0 left-0 right-0 h-12 bg-linear-to-t from-zinc-300 dark:from-zinc-950 via-zinc-300/75 dark:via-zinc-950/75 to-transparent'
+          : 'top-0 bottom-0 right-0 w-12 bg-linear-to-l from-zinc-300 dark:from-zinc-950 via-zinc-300/75 dark:via-zinc-950/75 to-transparent',
       ]"
     >
       <span
