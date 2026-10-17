@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import ScrollContainer from '@/components/scroll-container.vue'
 import CartItem from './cart-item.vue'
 </script>
 
 <template>
-  <div
-    class="flex flex-col gap-1.5 h-full divide-y divide-zinc-300 dark:divide-zinc-700 overflow-y-auto"
-  >
+  <ScrollContainer direction="vertical" class="h-full" content-class="divide-y divide-zinc-300">
     <CartItem v-for="i in 7" :key="i" />
-  </div>
+  </ScrollContainer>
 </template>

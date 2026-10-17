@@ -16,6 +16,7 @@ declare module 'vue' {
     MenuBar: typeof import('./src/components/menu-bar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScrollContainer: typeof import('./src/components/scroll-container.vue')['default']
     Sidebar: typeof import('primevue/sidebar')['default']
     SidebarLayout: typeof import('primevue/sidebarlayout')['default']
   }

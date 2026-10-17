@@ -42,7 +42,10 @@ import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
           <span class="font-bold">Total</span>
           <span class="font-bold">Rp. 999,999</span>
         </div>
-        <Button label="Process Transaction" />
+        <div class="flex gap-3">
+          <Button label="Process Transaction" fluid />
+          <Button icon="icon-[tabler--note]" severity="secondary" class="shrink-0" />
+        </div>
       </div>
     </div>
   </div>
