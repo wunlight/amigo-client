@@ -12,12 +12,21 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    Card: typeof import('primevue/card')['default']
+    Column: typeof import('primevue/column')['default']
+    DataTable: typeof import('primevue/datatable')['default']
+    Dialog: typeof import('primevue/dialog')['default']
+    Divider: typeof import('primevue/divider')['default']
+    Drawer: typeof import('primevue/drawer')['default']
     InputText: typeof import('primevue/inputtext')['default']
+    Menu: typeof import('primevue/menu')['default']
     MenuBar: typeof import('./src/components/menu-bar.vue')['default']
+    Password: typeof import('primevue/password')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollContainer: typeof import('./src/components/scroll-container.vue')['default']
     Sidebar: typeof import('primevue/sidebar')['default']
     SidebarLayout: typeof import('primevue/sidebarlayout')['default']
+    Toast: typeof import('primevue/toast')['default']
   }
 }

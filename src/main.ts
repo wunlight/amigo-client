@@ -3,6 +3,7 @@ import './assets/styles/index.css'
 import { definePreset } from '@primeuix/themes'
 import Aura from '@primeuix/themes/aura'
 import { createPinia } from 'pinia'
+import { ToastService } from 'primevue'
 import PrimeVue from 'primevue/config'
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -39,5 +40,6 @@ app.use(PrimeVue, {
     },
   },
 })
+app.use(ToastService)
 
 app.mount('#app')
