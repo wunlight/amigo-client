@@ -13,7 +13,17 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col gap-3">
-    <h6 class="font-semibold text-xl">Services</h6>
+    <div
+      class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
+    >
+      <h6 class="px-3 font-semibold text-xl">Services</h6>
+      <Button
+        icon="icon-[tabler--plus]"
+        label="Add New Service"
+        outlined
+        :pt="{ label: 'text-sm!' }"
+      />
+    </div>
     <ScrollContainer
       v-if="store.serviceList.length > 0"
       direction="horizontal"

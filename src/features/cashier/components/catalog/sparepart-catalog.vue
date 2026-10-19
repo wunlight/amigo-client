@@ -13,7 +13,17 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col gap-3 min-h-0">
-    <h6 class="font-semibold text-xl">Spareparts</h6>
+    <div
+      class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
+    >
+      <h6 class="px-3 font-semibold text-xl">Spareparts</h6>
+      <Button
+        icon="icon-[tabler--plus]"
+        label="Add New Sparepart"
+        outlined
+        :pt="{ label: 'text-sm!' }"
+      />
+    </div>
     <ScrollContainer
       v-if="store.sparepartList.length > 0"
       direction="vertical"
@@ -21,7 +31,7 @@ onMounted(() => {
     >
       <SparepartItem v-for="item in store.sparepartList" :key="item.id" :data="item" />
     </ScrollContainer>
-    <div v-else class="flex flex-col items-center justify-center gap-1.5 h-19 text-zinc-500">
+    <div v-else class="flex flex-col items-center justify-center gap-1.5 py-9 text-zinc-500">
       <span class="icon-[tabler--tools-off] size-9" />
       <p class="text-sm">
         {{ store.isLoading ? 'Loading...' : 'No Data Found!' }}
