@@ -13,9 +13,11 @@ const props = defineProps<SparepartItemProps>()
     class="flex items-start justify-between gap-3 p-3 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
   >
     <div class="flex flex-col gap-1.5 h-full overflow-hidden">
-      <span class="font-medium truncate">{{ props.data.name }}</span>
-      <span class="text-sm text-zinc-500">Rp. {{ props.data.selling_price }}</span>
-      <span class="mt-auto text-sm text-zinc-500">Stock: {{ props.data.stock }}</span>
+      <span class="font-medium truncate">{{ data.name }}</span>
+      <span class="text-sm text-zinc-500"
+        >Rp. {{ data.selling_price.toLocaleString('en-US') }}</span
+      >
+      <span class="mt-auto text-sm text-zinc-500">Stock: {{ data.stock }}</span>
     </div>
     <div class="flex flex-col gap-1.5">
       <Button icon="icon-[tabler--plus]" class="shrink-0 size-7!" />

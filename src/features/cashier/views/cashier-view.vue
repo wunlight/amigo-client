@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MenuBar from '@/components/menu-bar.vue'
 import CartList from '../components/cart/cart-list.vue'
-import ServiceCatalog from '../components/catalog/service-catalog.vue'
+import OperationCatalog from '../components/catalog/operation-catalog.vue'
 import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
 </script>
 
@@ -13,7 +13,7 @@ import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
           <InputText placeholder="Search..." />
         </template>
       </MenuBar>
-      <ServiceCatalog class="shrink-0" />
+      <OperationCatalog class="shrink-0" />
       <SparepartCatalog />
     </div>
 
