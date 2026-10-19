@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { logout } from '@/features/auth/api'
 import { useAuthStore } from '@/features/auth/stores/use-auth-store'
 import { onMounted, ref, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
@@ -7,7 +8,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const DARK_MODE_KEY = 'dark-mode'
-const MENU_ITEMS = [
+const DRAWER_MENU_ITEMS = [
   {
     label: 'Cashier',
     icon: 'icon-[tabler--shopping-bag]',
@@ -17,6 +18,13 @@ const MENU_ITEMS = [
     label: 'User',
     icon: 'icon-[tabler--user]',
     command: () => navigateTo('/users'),
+  },
+]
+const USER_MENU_ITEMS = [
+  {
+    label: 'Logout',
+    icon: 'icon-[tabler--logout]',
+    command: () => handleLogout(),
   },
 ]
 
@@ -31,13 +39,19 @@ function applyTheme(value: boolean) {
   localStorage.setItem(DARK_MODE_KEY, String(value))
 }
 
+function toggleUserMenu(e: MouseEvent) {
+  userMenu.value?.toggle(e)
+}
+
 function navigateTo(path: string) {
   router.push(path)
   showDrawer.value = false
 }
 
-function toggleUserMenu(e: MouseEvent) {
-  userMenu.value?.toggle(e)
+async function handleLogout() {
+  await logout()
+  authStore.setAuth(null)
+  navigateTo('/login')
 }
 
 onMounted(() => {
@@ -57,7 +71,7 @@ onMounted(() => {
         @click="showDrawer = true"
       />
       <Drawer v-model:visible="showDrawer" header="Menu">
-        <Menu :model="MENU_ITEMS" :pt="{ root: 'border-0!', itemContent: 'py-1.5' }" />
+        <Menu :model="DRAWER_MENU_ITEMS" :pt="{ root: 'border-0!', itemContent: 'py-1.5' }" />
       </Drawer>
       <slot name="left-content" />
     </div>
@@ -75,7 +89,7 @@ onMounted(() => {
         :pt="{ label: 'text-sm!' }"
         @click="toggleUserMenu"
       />
-      <Menu ref="user-menu" popup></Menu>
+      <Menu ref="user-menu" :model="USER_MENU_ITEMS" popup />
     </div>
   </div>
 </template>
