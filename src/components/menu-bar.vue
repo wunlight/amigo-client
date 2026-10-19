@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { useAuthStore } from '@/features/auth/stores/use-auth-store'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const DARK_MODE_KEY = 'dark-mode'
 const MENU_ITEMS = [
@@ -21,6 +23,8 @@ const MENU_ITEMS = [
 const isDark = ref<boolean>(localStorage.getItem(DARK_MODE_KEY) === 'true')
 const showDrawer = ref<boolean>(false)
 
+const userMenu = useTemplateRef('user-menu')
+
 function applyTheme(value: boolean) {
   isDark.value = value
   document.documentElement.classList.toggle('dark', value)
@@ -30,6 +34,10 @@ function applyTheme(value: boolean) {
 function navigateTo(path: string) {
   router.push(path)
   showDrawer.value = false
+}
+
+function toggleUserMenu(e: MouseEvent) {
+  userMenu.value?.toggle(e)
 }
 
 onMounted(() => {
@@ -53,11 +61,21 @@ onMounted(() => {
       </Drawer>
       <slot name="left-content" />
     </div>
-    <Button
-      icon="icon-[tabler--sun]"
-      severity="secondary"
-      class="size-9!"
-      @click="applyTheme(!isDark)"
-    />
+    <div class="flex gap-3">
+      <Button
+        icon="icon-[tabler--sun]"
+        severity="secondary"
+        class="size-9!"
+        @click="applyTheme(!isDark)"
+      />
+      <Button
+        icon="icon-[tabler--user]"
+        :label="authStore.auth?.name ?? 'Not Authenticated'"
+        severity="secondary"
+        :pt="{ label: 'text-sm!' }"
+        @click="toggleUserMenu"
+      />
+      <Menu ref="user-menu" popup></Menu>
+    </div>
   </div>
 </template>
