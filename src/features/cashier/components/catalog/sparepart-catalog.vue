@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
+import SparepartFormDialog from '@/features/sparepart/components/sparepart-form-dialog.vue'
 import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
 import { onMounted } from 'vue'
 import SparepartItem from './sparepart-item.vue'
@@ -17,12 +18,17 @@ onMounted(() => {
       class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
       <h6 class="px-3 font-semibold text-xl">Spareparts</h6>
-      <Button
-        icon="icon-[tabler--plus]"
-        label="Add New Sparepart"
-        outlined
-        :pt="{ label: 'text-sm!' }"
-      />
+      <SparepartFormDialog>
+        <template #trigger="{ open }">
+          <Button
+            icon="icon-[tabler--plus]"
+            label="Add New Sparepart"
+            outlined
+            :pt="{ label: 'text-sm!' }"
+            @click="open()"
+          />
+        </template>
+      </SparepartFormDialog>
     </div>
     <ScrollContainer
       v-if="store.sparepartList.length > 0"
