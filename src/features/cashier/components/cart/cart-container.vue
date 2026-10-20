@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { checkout } from '../../api/index.ts'
 import { useCartStore } from '../../stores/use-cart-store'
 import CartItem from './cart-item.vue'
+import CartNotesDialog from './cart-notes-dialog.vue'
 
 const store = useCartStore()
 
@@ -85,12 +86,17 @@ async function handleCheckout() {
           class="text-sm!"
           @click="handleCheckout"
         />
-        <Button
-          icon="icon-[tabler--note]"
-          severity="secondary"
-          :disabled="store.items.length <= 0"
-          class="shrink-0"
-        />
+        <CartNotesDialog>
+          <template #trigger="{ open }">
+            <Button
+              icon="icon-[tabler--note]"
+              severity="secondary"
+              :disabled="store.items.length <= 0"
+              class="shrink-0"
+              @click="open"
+            />
+          </template>
+        </CartNotesDialog>
       </div>
     </div>
   </div>
