@@ -39,16 +39,16 @@ onMounted(() => {
 <template>
   <div class="flex flex-col gap-3">
     <div
-      class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
+      class="flex items-center justify-between px-3 pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
-      <h6 class="px-3 font-semibold text-xl">Operations</h6>
+      <h6 class="font-semibold text-xl">Operations</h6>
       <OperationFormDialog>
         <template #trigger="{ open }">
           <Button
             icon="icon-[tabler--plus]"
             label="Add New Operation"
             outlined
-            :pt="{ label: 'text-sm!' }"
+            :pt="{ label: 'text-xs!' }"
             @click="open()"
           />
         </template>

@@ -24,7 +24,7 @@ function addToCart() {
 
 <template>
   <div
-    class="flex items-center justify-between gap-3 p-3 h-32 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
+    class="flex items-center justify-between gap-3 p-3 h-31 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
   >
     <div class="flex flex-col gap-1.5 h-full overflow-hidden">
       <span class="font-medium truncate">{{ data.name }}</span>

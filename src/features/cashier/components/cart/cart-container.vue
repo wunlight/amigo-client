@@ -35,18 +35,17 @@ async function handleCheckout() {
     class="flex flex-col p-3 min-h-0 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
   >
     <div
-      class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
+      class="flex items-center justify-between gap-3 pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
-      <h6 class="font-bold">Transaction Cart</h6>
+      <div class="flex flex-col overflow-hidden">
+        <h6 class="font-bold">Transaction Cart</h6>
+        <p v-if="store.notes" class="truncate text-xs text-zinc-500">{{ store.notes }}</p>
+      </div>
       <Button
+        v-if="store.items.length > 0"
         label="Clear"
         severity="secondary"
         size="small"
-        :class="
-          store.items.length > 0
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        "
         @click="store.clearCart"
       />
     </div>

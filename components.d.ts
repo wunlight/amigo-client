@@ -28,6 +28,7 @@ declare module 'vue' {
     ScrollContainer: typeof import('./src/components/scroll-container.vue')['default']
     Sidebar: typeof import('primevue/sidebar')['default']
     SidebarLayout: typeof import('primevue/sidebarlayout')['default']
+    Textarea: typeof import('primevue/textarea')['default']
     Toast: typeof import('primevue/toast')['default']
   }
 }

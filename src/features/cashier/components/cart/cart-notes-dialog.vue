@@ -30,7 +30,7 @@ function handleSubmit() {
     <form class="flex flex-col gap-3">
       <div class="flex flex-col gap-1">
         <label for="notes" class="text-sm">Notes</label>
-        <InputText v-model="notes" id="notes" />
+        <Textarea v-model="notes" rows="4" id="notes" />
       </div>
       <Divider class="my-1.5!" />
       <div class="flex justify-end gap-3">
