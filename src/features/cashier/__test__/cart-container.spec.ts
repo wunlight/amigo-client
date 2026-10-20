@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vite-plus/test'
+import CartContainer from '../components/cart/cart-container.vue'
 import { useCartStore } from '../stores/use-cart-store.ts'
-import CashierView from '../views/cashier-view.vue'
 
-describe('CashierView', () => {
+describe('CartContainer', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
@@ -30,18 +30,13 @@ describe('CashierView', () => {
       quantity: 1,
     })
 
-    const wrapper = mount(CashierView, {
+    const wrapper = mount(CartContainer, {
       global: {
         stubs: {
-          MenuBar: true,
-          OperationCatalog: true,
-          SparepartCatalog: true,
-          CartList: true,
           Button: {
             template: '<button @click="$emit(\'click\')"><slot>{{ label }}</slot></button>',
             props: ['label'],
           },
-          InputText: true,
         },
       },
     })
@@ -62,19 +57,14 @@ describe('CashierView', () => {
       quantity: 1,
     })
 
-    const wrapper = mount(CashierView, {
+    const wrapper = mount(CartContainer, {
       global: {
         stubs: {
-          MenuBar: true,
-          OperationCatalog: true,
-          SparepartCatalog: true,
-          CartList: true,
           Button: {
             template:
               '<button class="clear-btn" @click="$emit(\'click\')"><slot>{{ label }}</slot></button>',
             props: ['label'],
           },
-          InputText: true,
         },
       },
     })
@@ -85,5 +75,27 @@ describe('CashierView', () => {
     await clearButton.trigger('click')
 
     expect(cartStore.items.length).toBe(0)
+  })
+
+  it('should display "No items in cart" message when cart is empty', () => {
+    const cartStore = useCartStore()
+
+    expect(cartStore.items.length).toBe(0)
+
+    const wrapper = mount(CartContainer, {
+      global: {
+        stubs: {
+          ScrollContainer: {
+            template: '<div class="scroll-container-stub"><slot /></div>',
+          },
+          CartItem: true,
+          Button: true,
+        },
+      },
+    })
+
+    expect(wrapper.text()).toContain('No items in cart')
+
+    expect(wrapper.find('.scroll-container-stub').exists()).toBe(false)
   })
 })
