@@ -1,4 +1,4 @@
-import type { SuccessResponse } from '@/types/response'
+import type { SuccessResponse } from '@/types/response.type'
 import { apiClient } from '@/utils/api-client'
 import type { CheckoutPayload, CheckoutResponse } from '../types/cart.type'
 

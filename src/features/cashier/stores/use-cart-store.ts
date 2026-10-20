@@ -63,12 +63,12 @@ export const useCartStore = defineStore('cart', {
 
       const normalizedData: CartItem = {
         ...data,
-        availableStock: data.type === 'operation' ? 1 : data.availableStock,
+        available_stock: data.type === 'operation' ? 1 : data.available_stock,
         quantity: data.type === 'operation' ? 1 : data.quantity,
       }
 
       if (!isInCart) {
-        const initialQty = Math.min(normalizedData.quantity, normalizedData.availableStock)
+        const initialQty = Math.min(normalizedData.quantity, normalizedData.available_stock)
         if (initialQty > 0) {
           this.items.push({ ...normalizedData, quantity: initialQty })
         }
@@ -91,7 +91,7 @@ export const useCartStore = defineStore('cart', {
     increaseQty(id: string) {
       const item = this.items.find((item) => item.id === id)
       if (!item || item.type === 'operation') return
-      if (item.quantity < item.availableStock) {
+      if (item.quantity < item.available_stock) {
         item.quantity++
         this.persist()
       }

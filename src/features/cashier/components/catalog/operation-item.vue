@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OperationDTO } from '@/features/operation/types/operation'
+import type { OperationDTO } from '@/features/operation/types/operation.type'
 import { useCartStore } from '../../stores/use-cart-store'
 
 type OperationItemProps = {
@@ -12,7 +12,7 @@ const cartStore = useCartStore()
 
 function addToCart() {
   cartStore.addItem({
-    availableStock: 1,
+    available_stock: 1,
     id: props.data.id,
     name: props.data.name,
     price: props.data.selling_price,

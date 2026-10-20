@@ -1,6 +1,6 @@
-import type { SuccessResponse } from '@/types/response'
+import type { SuccessResponse } from '@/types/response.type'
 import { apiClient } from '@/utils/api-client'
-import type { LoginPayload, LoginResponse } from '../types/auth'
+import type { LoginPayload, LoginResponse } from '../types/auth.type'
 
 export const login = (payload: LoginPayload) =>
   apiClient.post<SuccessResponse<LoginResponse>>('/v1/login', payload)

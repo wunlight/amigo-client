@@ -7,6 +7,7 @@ import { useCartStore } from '../stores/use-cart-store.ts'
 describe('CartContainer', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    localStorage.clear()
   })
 
   it('should display correct total amounts when cart has items', async () => {
@@ -16,7 +17,7 @@ describe('CartContainer', () => {
       type: 'sparepart',
       id: 'part-1',
       name: 'Oli Mesin',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 2,
     })
@@ -25,7 +26,7 @@ describe('CartContainer', () => {
       type: 'operation',
       id: 'op-1',
       name: 'Jasa Ganti',
-      availableStock: 1,
+      available_stock: 1,
       price: 20000,
       quantity: 1,
     })
@@ -52,7 +53,7 @@ describe('CartContainer', () => {
       type: 'sparepart',
       id: 'part-1',
       name: 'Busi',
-      availableStock: 5,
+      available_stock: 5,
       price: 15000,
       quantity: 1,
     })

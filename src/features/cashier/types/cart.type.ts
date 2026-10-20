@@ -4,7 +4,7 @@ export type CartItem = {
   type: CartItemType
   id: string
   name: string
-  availableStock: number
+  available_stock: number
   price: number
   quantity: number
 }

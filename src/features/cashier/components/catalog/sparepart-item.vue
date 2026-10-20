@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SparepartDTO } from '@/features/sparepart/types/sparepart'
+import type { SparepartDTO } from '@/features/sparepart/types/sparepart.type'
 import { useCartStore } from '../../stores/use-cart-store'
 
 type SparepartItemProps = {
@@ -12,7 +12,7 @@ const cartStore = useCartStore()
 
 function addToCart() {
   cartStore.addItem({
-    availableStock: props.data.stock,
+    available_stock: props.data.stock,
     id: props.data.id,
     name: props.data.name,
     price: props.data.selling_price,

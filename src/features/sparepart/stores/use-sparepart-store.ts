@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { listSpareparts } from '../api'
-import type { SparepartDTO } from '../types/sparepart'
+import type { SparepartDTO } from '../types/sparepart.type'
 
 export const useSparepartStore = defineStore('sparepart', () => {
   const sparepartList = ref<SparepartDTO[]>([])

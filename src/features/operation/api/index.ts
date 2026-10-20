@@ -1,10 +1,10 @@
-import type { PaginatedResponse, SuccessResponse } from '@/types/response'
+import type { PaginatedResponse, SuccessResponse } from '@/types/response.type'
 import { apiClient } from '@/utils/api-client'
 import type {
   CreateOperationPayload,
   OperationDTO,
   UpdateOperationPayload,
-} from '../types/operation'
+} from '../types/operation.type'
 
 export const listOperations = () => apiClient.get<PaginatedResponse<OperationDTO>>(`/v1/operations`)
 

@@ -1,10 +1,10 @@
-import type { PaginatedResponse, SuccessResponse } from '@/types/response'
+import type { PaginatedResponse, SuccessResponse } from '@/types/response.type'
 import { apiClient } from '@/utils/api-client'
 import type {
   CreateSparepartPayload,
   SparepartDTO,
   UpdateSparepartPayload,
-} from '../types/sparepart'
+} from '../types/sparepart.type'
 
 export const listSpareparts = () => apiClient.get<PaginatedResponse<SparepartDTO>>(`/v1/spareparts`)
 

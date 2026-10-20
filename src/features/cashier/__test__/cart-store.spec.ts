@@ -6,6 +6,7 @@ import type { CartItem } from '../types/cart.type'
 describe('Cart Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    localStorage.clear()
   })
 
   it('should initialize cart with blank state', () => {
@@ -19,7 +20,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 1,
     }
@@ -37,7 +38,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 1,
     }
@@ -55,7 +56,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
-      availableStock: 2,
+      available_stock: 2,
       price: 50000,
       quantity: 1,
     }
@@ -73,7 +74,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 1,
     }
@@ -93,7 +94,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 1,
     }
@@ -106,13 +107,13 @@ describe('Cart Store', () => {
     expect(store.items[0].price).toBe(60000)
   })
 
-  it('will enforce quantity = 1 and availableStock = 1 for operation type items', () => {
+  it('will enforce quantity = 1 and available_stock = 1 for operation type items', () => {
     const store = useCartStore()
     const item: CartItem = {
       type: 'operation',
       id: 'op-1',
       name: 'Jasa Servis Ringan',
-      availableStock: 10,
+      available_stock: 10,
       price: 100000,
       quantity: 5,
     }
@@ -121,7 +122,7 @@ describe('Cart Store', () => {
 
     expect(store.items.length).toBe(1)
     expect(store.items[0].quantity).toBe(1)
-    expect(store.items[0].availableStock).toBe(1)
+    expect(store.items[0].available_stock).toBe(1)
   })
 
   it('unable to increase quantity for operation type items', () => {
@@ -130,7 +131,7 @@ describe('Cart Store', () => {
       type: 'operation',
       id: 'op-1',
       name: 'Jasa Servis Ringan',
-      availableStock: 1,
+      available_stock: 1,
       price: 100000,
       quantity: 1,
     }
@@ -149,7 +150,7 @@ describe('Cart Store', () => {
       type: 'sparepart',
       id: 'item-1',
       name: 'Oli',
-      availableStock: 5,
+      available_stock: 5,
       price: 50000,
       quantity: 2,
     })
@@ -158,7 +159,7 @@ describe('Cart Store', () => {
       type: 'operation',
       id: 'op-1',
       name: 'Jasa Ganti Oli',
-      availableStock: 1,
+      available_stock: 1,
       price: 20000,
       quantity: 1,
     })
