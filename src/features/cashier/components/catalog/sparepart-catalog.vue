@@ -2,13 +2,37 @@
 import ScrollContainer from '@/components/scroll-container.vue'
 import SparepartFormDialog from '@/features/sparepart/components/sparepart-form-dialog.vue'
 import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useCartStore } from '../../stores/use-cart-store.ts'
 import SparepartItem from './sparepart-item.vue'
 
-const store = useSparepartStore()
+const sparepartStore = useSparepartStore()
+const cartStore = useCartStore()
+
+const sortedSpareparts = computed(() => {
+  return [...sparepartStore.sparepartList].sort((a, b) => {
+    const aInCart = cartStore.isInCart(a.id)
+    const bInCart = cartStore.isInCart(b.id)
+
+    if (aInCart && !bInCart) return -1
+    if (!aInCart && bInCart) return 1
+
+    return 0
+  })
+})
+
+const lastInCartIdx = computed(() => {
+  let lastIndex = -1
+  sortedSpareparts.value.forEach((item, index) => {
+    if (cartStore.isInCart(item.id)) {
+      lastIndex = index
+    }
+  })
+  return lastIndex
+})
 
 onMounted(() => {
-  store.fetchSpareparts()
+  sparepartStore.fetchSpareparts()
 })
 </script>
 
@@ -31,16 +55,22 @@ onMounted(() => {
       </SparepartFormDialog>
     </div>
     <ScrollContainer
-      v-if="store.sparepartList.length > 0"
+      v-if="sparepartStore.sparepartList.length > 0"
       direction="vertical"
-      content-class="grid grid-cols-4 gap-4"
+      content-class="grid grid-cols-4 gap-3"
     >
-      <SparepartItem v-for="item in store.sparepartList" :key="item.id" :data="item" />
+      <template v-for="(item, idx) in sortedSpareparts" :key="item.id">
+        <SparepartItem :data="item" />
+        <div
+          v-if="idx === lastInCartIdx && idx !== sortedSpareparts.length - 1"
+          class="col-span-full border-b border-dashed border-zinc-300 dark:border-zinc-700"
+        />
+      </template>
     </ScrollContainer>
     <div v-else class="flex flex-col items-center justify-center gap-1.5 py-9 text-zinc-500">
       <span class="icon-[tabler--tools-off] size-9" />
       <p class="text-sm">
-        {{ store.isLoading ? 'Loading...' : 'No Data Found!' }}
+        {{ sparepartStore.isLoading ? 'Loading...' : 'No Data Found!' }}
       </p>
     </div>
   </div>
