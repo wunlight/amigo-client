@@ -15,7 +15,7 @@ const isEditPrice = ref<boolean>(false)
 const itemPrice = ref(props.data.price)
 
 function handleUpdatePrice() {
-  store.updatePrice(props.data.id, itemPrice.value)
+  store.updatePrice(props.data.id, Number(itemPrice.value))
   isEditPrice.value = false
 }
 </script>
