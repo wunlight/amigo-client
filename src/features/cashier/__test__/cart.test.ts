@@ -16,6 +16,7 @@ describe('Cart Store', () => {
   it('will add new item to cart', () => {
     const store = useCartStore()
     const newItem: CartItem = {
+      type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
       availableStock: 5,
@@ -33,6 +34,7 @@ describe('Cart Store', () => {
   it('will +1 quantity if added item in cart', () => {
     const store = useCartStore()
     const item: CartItem = {
+      type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
       availableStock: 5,
@@ -50,6 +52,7 @@ describe('Cart Store', () => {
   it('unable to add quantity more than available stock', () => {
     const store = useCartStore()
     const item: CartItem = {
+      type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
       availableStock: 2,
@@ -67,6 +70,7 @@ describe('Cart Store', () => {
   it('will remove item if quantity = 0', () => {
     const store = useCartStore()
     const item: CartItem = {
+      type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
       availableStock: 5,
@@ -86,6 +90,7 @@ describe('Cart Store', () => {
   it('will update item price', () => {
     const store = useCartStore()
     const item: CartItem = {
+      type: 'sparepart',
       id: 'item-1',
       name: 'Kampas Rem',
       availableStock: 5,
@@ -99,5 +104,67 @@ describe('Cart Store', () => {
     store.updatePrice(item.id, 60000)
 
     expect(store.items[0].price).toBe(60000)
+  })
+
+  it('will enforce quantity = 1 and availableStock = 1 for operation type items', () => {
+    const store = useCartStore()
+    const item: CartItem = {
+      type: 'operation',
+      id: 'op-1',
+      name: 'Jasa Servis Ringan',
+      availableStock: 10,
+      price: 100000,
+      quantity: 5,
+    }
+
+    store.addItem(item)
+
+    expect(store.items.length).toBe(1)
+    expect(store.items[0].quantity).toBe(1)
+    expect(store.items[0].availableStock).toBe(1)
+  })
+
+  it('unable to increase quantity for operation type items', () => {
+    const store = useCartStore()
+    const item: CartItem = {
+      type: 'operation',
+      id: 'op-1',
+      name: 'Jasa Servis Ringan',
+      availableStock: 1,
+      price: 100000,
+      quantity: 1,
+    }
+
+    store.addItem(item)
+    store.addItem(item)
+    store.increaseQty(item.id)
+
+    expect(store.items[0].quantity).toBe(1)
+  })
+
+  it('will calculate total amount correctly based on type filter', () => {
+    const store = useCartStore()
+
+    store.addItem({
+      type: 'sparepart',
+      id: 'item-1',
+      name: 'Oli',
+      availableStock: 5,
+      price: 50000,
+      quantity: 2,
+    })
+
+    store.addItem({
+      type: 'operation',
+      id: 'op-1',
+      name: 'Jasa Ganti Oli',
+      availableStock: 1,
+      price: 20000,
+      quantity: 1,
+    })
+
+    expect(store.getTotalAmount('sparepart')).toBe(100000)
+    expect(store.getTotalAmount('operation')).toBe(20000)
+    expect(store.getTotalAmount('all')).toBe(120000)
   })
 })

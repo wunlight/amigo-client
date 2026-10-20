@@ -18,7 +18,13 @@ const store = useCartStore()
       <span class="text-xs text-zinc-500">Rp. {{ data.price.toLocaleString('en-US') }}</span>
     </div>
     <div class="flex gap-1.5">
-      <Button icon="icon-[tabler--trash]" severity="danger" outlined class="shrink-0 size-6!" />
+      <Button
+        icon="icon-[tabler--trash]"
+        severity="danger"
+        outlined
+        class="shrink-0 size-6!"
+        @click="store.removeItem(data.id)"
+      />
       <template v-if="data.type === 'sparepart'">
         <Button
           icon="icon-[tabler--minus]"

@@ -18,17 +18,32 @@ export const useCartStore = defineStore('cart', {
     getQty: (state) => {
       return (id: string) => state.items.find((i) => i.id === id)?.quantity ?? 0
     },
+
+    getTotalAmount: (state) => {
+      return (type: 'all' | 'sparepart' | 'operation') => {
+        return state.items
+          .filter((val) => type === 'all' || val.type === type)
+          .reduce((acc, val) => acc + val.price * val.quantity, 0)
+      }
+    },
   },
 
   actions: {
     addItem(data: CartItem) {
       const isInCart = this.isInCart(data.id)
+
+      const normalizedData: CartItem = {
+        ...data,
+        availableStock: data.type === 'operation' ? 1 : data.availableStock,
+        quantity: data.type === 'operation' ? 1 : data.quantity,
+      }
+
       if (!isInCart) {
-        const initialQty = Math.min(data.quantity, data.availableStock)
+        const initialQty = Math.min(normalizedData.quantity, normalizedData.availableStock)
         if (initialQty > 0) {
-          this.items.push({ ...data, quantity: initialQty })
+          this.items.push({ ...normalizedData, quantity: initialQty })
         }
-      } else {
+      } else if (data.type === 'sparepart') {
         this.increaseQty(data.id)
       }
     },
@@ -42,7 +57,8 @@ export const useCartStore = defineStore('cart', {
 
     increaseQty(id: string) {
       const item = this.items.find((item) => item.id === id)
-      if (item && item.quantity < item.availableStock) {
+      if (!item || item.type === 'operation') return
+      if (item.quantity < item.availableStock) {
         item.quantity++
       }
     },
@@ -63,6 +79,10 @@ export const useCartStore = defineStore('cart', {
       if (index !== -1 && newPrice >= 0) {
         this.items[index].price = newPrice
       }
+    },
+
+    clearCart() {
+      this.items = []
     },
   },
 })
