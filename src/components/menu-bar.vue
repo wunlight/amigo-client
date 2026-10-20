@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { useTheme } from '@/composables/use-theme'
 import { logout } from '@/features/auth/api'
 import { useAuthStore } from '@/features/auth/stores/use-auth-store'
-import { onMounted, ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const theme = useTheme()
 
-const DARK_MODE_KEY = 'dark-mode'
 const DRAWER_MENU_ITEMS = [
   {
     label: 'Cashier',
@@ -28,16 +29,9 @@ const USER_MENU_ITEMS = [
   },
 ]
 
-const isDark = ref<boolean>(localStorage.getItem(DARK_MODE_KEY) === 'true')
 const showDrawer = ref<boolean>(false)
 
 const userMenu = useTemplateRef('user-menu')
-
-function applyTheme(value: boolean) {
-  isDark.value = value
-  document.documentElement.classList.toggle('dark', value)
-  localStorage.setItem(DARK_MODE_KEY, String(value))
-}
 
 function toggleUserMenu(e: MouseEvent) {
   userMenu.value?.toggle(e)
@@ -53,10 +47,6 @@ async function handleLogout() {
   authStore.setAuth(null)
   navigateTo('/login')
 }
-
-onMounted(() => {
-  applyTheme(isDark.value)
-})
 </script>
 
 <template>
@@ -80,7 +70,7 @@ onMounted(() => {
         icon="icon-[tabler--sun]"
         severity="secondary"
         class="size-9!"
-        @click="applyTheme(!isDark)"
+        @click="theme.toggleTheme"
       />
       <Button
         icon="icon-[tabler--user]"
