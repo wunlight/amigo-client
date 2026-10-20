@@ -11,6 +11,20 @@ const routes = [
     },
   },
   {
+    path: '/spareparts',
+    component: () => import('@/features/sparepart/views/sparepart-manager.vue'),
+    meta: {
+      protected: true,
+    },
+  },
+  {
+    path: '/operations',
+    component: () => import('@/features/operation/views/operation-manager.vue'),
+    meta: {
+      protected: true,
+    },
+  },
+  {
     path: '/users',
     component: () => import('@/features/user/views/user-manager.vue'),
     meta: {

@@ -16,6 +16,16 @@ const DRAWER_MENU_ITEMS = [
     command: () => navigateTo('/'),
   },
   {
+    label: 'Sparepart',
+    icon: 'icon-[tabler--tools]',
+    command: () => navigateTo('/spareparts'),
+  },
+  {
+    label: 'Operation',
+    icon: 'icon-[tabler--clipboard]',
+    command: () => navigateTo('/operations'),
+  },
+  {
     label: 'User',
     icon: 'icon-[tabler--user]',
     command: () => navigateTo('/users'),
