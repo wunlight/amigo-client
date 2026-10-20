@@ -37,14 +37,24 @@ async function handleLogin() {
   <div class="grid place-content-center h-svh overflow-hidden">
     <Card class="border border-zinc-300 dark:border-zinc-700">
       <template #content>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 w-72 overflow-hidden">
           <div class="flex flex-col gap-1">
             <label for="email" class="text-sm">E-mail</label>
             <InputText v-model="form.email" id="email" />
           </div>
           <div class="flex flex-col gap-1">
             <label for="password" class="text-sm">Password</label>
-            <Password v-model="form.password" toggle-mask :feedback="false" id="password" />
+            <Password
+              v-model="form.password"
+              toggle-mask
+              :feedback="false"
+              id="password"
+              :pt="{
+                pcInputText: {
+                  root: 'min-w-0!',
+                },
+              }"
+            />
           </div>
           <Button label="Login" class="mt-4.5 text-sm!" @click="handleLogin" />
         </div>

@@ -6,11 +6,22 @@ import { computed, onMounted } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
 import OperationItem from './operation-item.vue'
 
+type OperationCatalog = {
+  searchQuery: string
+}
+
+const props = defineProps<OperationCatalog>()
+
 const operationStore = useOperationStore()
 const cartStore = useCartStore()
 
 const sortedOperations = computed(() => {
-  return [...operationStore.operationList].sort((a, b) => {
+  const filtered = operationStore.operationList.filter((item) => {
+    if (!props.searchQuery) return true
+    return item.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+  })
+
+  return filtered.sort((a, b) => {
     const aInCart = cartStore.isInCart(a.id)
     const bInCart = cartStore.isInCart(b.id)
 
@@ -48,14 +59,14 @@ onMounted(() => {
             icon="icon-[tabler--plus]"
             label="Add New Operation"
             outlined
-            :pt="{ label: 'text-xs!' }"
+            :pt="{ label: 'text-sm!' }"
             @click="open()"
           />
         </template>
       </OperationFormDialog>
     </div>
     <ScrollContainer
-      v-if="operationStore.operationList.length > 0"
+      v-if="sortedOperations.length > 0"
       direction="horizontal"
       content-class="gap-3"
     >

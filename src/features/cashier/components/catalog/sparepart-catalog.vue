@@ -6,11 +6,22 @@ import { computed, onMounted } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
 import SparepartItem from './sparepart-item.vue'
 
+type SparepartCatalog = {
+  searchQuery: string
+}
+
+const props = defineProps<SparepartCatalog>()
+
 const sparepartStore = useSparepartStore()
 const cartStore = useCartStore()
 
 const sortedSpareparts = computed(() => {
-  return [...sparepartStore.sparepartList].sort((a, b) => {
+  const filtered = sparepartStore.sparepartList.filter((item) => {
+    if (!props.searchQuery) return true
+    return item.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+  })
+
+  return filtered.sort((a, b) => {
     const aInCart = cartStore.isInCart(a.id)
     const bInCart = cartStore.isInCart(b.id)
 
@@ -48,14 +59,14 @@ onMounted(() => {
             icon="icon-[tabler--plus]"
             label="Add New Sparepart"
             outlined
-            :pt="{ label: 'text-xs!' }"
+            :pt="{ label: 'text-sm!' }"
             @click="open()"
           />
         </template>
       </SparepartFormDialog>
     </div>
     <ScrollContainer
-      v-if="sparepartStore.sparepartList.length > 0"
+      v-if="sortedSpareparts.length > 0"
       direction="vertical"
       content-class="grid grid-cols-4 gap-3"
     >
