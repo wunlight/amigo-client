@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SparepartDTO } from '@/features/sparepart/types/sparepart'
-import { useCartStore } from '../../stores/cart'
+import { useCartStore } from '../../stores/use-cart-store'
 
 type SparepartItemProps = {
   data: SparepartDTO

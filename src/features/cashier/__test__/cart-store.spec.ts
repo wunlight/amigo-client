@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vite-plus/test'
-import { useCartStore } from '../stores/cart'
+import { useCartStore } from '../stores/use-cart-store'
 import type { CartItem } from '../types/cart.type'
 
 describe('Cart Store', () => {

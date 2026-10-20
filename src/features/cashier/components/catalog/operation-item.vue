@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OperationDTO } from '@/features/operation/types/operation'
-import { useCartStore } from '../../stores/cart'
+import { useCartStore } from '../../stores/use-cart-store'
 
 type OperationItemProps = {
   data: OperationDTO

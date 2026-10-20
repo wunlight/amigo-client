@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
-import { useCartStore } from '../../stores/cart.ts'
+import { useCartStore } from '../../stores/use-cart-store.ts'
 import CartItem from './cart-item.vue'
 
 const store = useCartStore()

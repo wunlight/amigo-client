@@ -4,7 +4,7 @@ import { computed } from 'vue'
 import CartList from '../components/cart/cart-list.vue'
 import OperationCatalog from '../components/catalog/operation-catalog.vue'
 import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
-import { useCartStore } from '../stores/cart.ts'
+import { useCartStore } from '../stores/use-cart-store.ts'
 
 const cartStore = useCartStore()
 
@@ -55,7 +55,7 @@ const totalAmount = computed(() => {
           >
         </div>
         <div class="flex justify-between">
-          <span class="text-sm text-zinc-500">Services</span>
+          <span class="text-sm text-zinc-500">Operations</span>
           <span class="text-sm text-zinc-500"
             >Rp. {{ totalAmount.operation.toLocaleString('en-US') }}</span
           >
