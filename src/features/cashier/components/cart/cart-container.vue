@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
 import { computed } from 'vue'
+import { checkout } from '../../api/index.ts'
 import { useCartStore } from '../../stores/use-cart-store'
 import CartItem from './cart-item.vue'
 
@@ -13,6 +14,19 @@ const totalAmount = computed(() => {
     operation: store.getTotalAmount('operation'),
   }
 })
+
+async function handleCheckout() {
+  const payload = store.getCheckoutPayload
+
+  try {
+    const { data } = await checkout(payload)
+    if (data.success) {
+      store.clearCart()
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
 </script>
 
 <template>
@@ -60,12 +74,23 @@ const totalAmount = computed(() => {
         >
       </div>
       <div class="flex justify-between">
-        <span class="text-sm font-bold">Total</span>
-        <span class="text-sm text-zinc-500">Rp. {{ totalAmount.all.toLocaleString('en-US') }}</span>
+        <span class="text-sm font-medium">Total</span>
+        <span class="text-sm font-medium">Rp. {{ totalAmount.all.toLocaleString('en-US') }}</span>
       </div>
       <div class="flex gap-3">
-        <Button label="Process Transaction" fluid class="text-sm!" />
-        <Button icon="icon-[tabler--note]" severity="secondary" class="shrink-0" />
+        <Button
+          label="Process Transaction"
+          fluid
+          :disabled="store.items.length <= 0"
+          class="text-sm!"
+          @click="handleCheckout"
+        />
+        <Button
+          icon="icon-[tabler--note]"
+          severity="secondary"
+          :disabled="store.items.length <= 0"
+          class="shrink-0"
+        />
       </div>
     </div>
   </div>
