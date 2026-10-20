@@ -43,7 +43,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div class="group relative overflow-hidden">
+  <div class="relative overflow-hidden">
     <div
       v-if="showStartGradient"
       :class="[

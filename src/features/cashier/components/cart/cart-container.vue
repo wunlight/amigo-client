@@ -17,17 +17,21 @@ const totalAmount = computed(() => {
 
 <template>
   <div
-    class="col-span-1 flex flex-col p-3 min-h-0 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
+    class="flex flex-col p-3 min-h-0 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg"
   >
     <div
       class="flex items-center justify-between pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
       <h6 class="font-bold">Transaction Cart</h6>
       <Button
-        v-if="store.items.length > 0"
         label="Clear"
         severity="secondary"
         size="small"
+        :class="
+          store.items.length > 0
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+        "
         @click="store.clearCart"
       />
     </div>
