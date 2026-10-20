@@ -1,11 +1,25 @@
 <script setup lang="ts">
 import type { OperationDTO } from '@/features/operation/types/operation'
+import { useCartStore } from '../../stores/cart'
 
 type OperationItemProps = {
   data: OperationDTO
 }
 
 const props = defineProps<OperationItemProps>()
+
+const cartStore = useCartStore()
+
+function addToCart() {
+  cartStore.addItem({
+    availableStock: 1,
+    id: props.data.id,
+    name: props.data.name,
+    price: props.data.selling_price,
+    quantity: 1,
+    type: 'operation',
+  })
+}
 </script>
 
 <template>
@@ -18,6 +32,14 @@ const props = defineProps<OperationItemProps>()
         >Rp. {{ data.selling_price.toLocaleString('en-US') }}</span
       >
     </div>
-    <Button icon="icon-[tabler--plus]" class="shrink-0 size-7!" />
+    <Button
+      v-if="cartStore.isInCart(data.id)"
+      icon="icon-[tabler--minus]"
+      severity="danger"
+      outlined
+      class="shrink-0 size-7!"
+      @click="cartStore.removeItem(data.id)"
+    />
+    <Button v-else icon="icon-[tabler--plus]" class="shrink-0 size-7!" @click="addToCart" />
   </div>
 </template>

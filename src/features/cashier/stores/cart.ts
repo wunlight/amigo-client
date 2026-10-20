@@ -14,6 +14,10 @@ export const useCartStore = defineStore('cart', {
     isInCart: (state) => {
       return (id: string) => state.items.some((item) => item.id === id)
     },
+
+    getQty: (state) => {
+      return (id: string) => state.items.find((i) => i.id === id)?.quantity ?? 0
+    },
   },
 
   actions: {
