@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import MenuBar from '@/components/menu-bar.vue'
+import { onMounted } from 'vue'
+import { useRestockStore } from '../store/restock-store'
+
+const store = useRestockStore()
+
+onMounted(() => {
+  store.fetchRestockOverview()
+})
 </script>
 
 <template>
@@ -17,7 +25,9 @@ import MenuBar from '@/components/menu-bar.vue'
             />
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Total Spareparts</label>
-              <h6 class="text-3xl font-medium">142</h6>
+              <h6 class="text-3xl font-medium">
+                {{ store.restockOverview?.total_spareparts.toLocaleString('en-US') ?? 0 }}
+              </h6>
             </div>
           </div>
         </template>
@@ -26,13 +36,16 @@ import MenuBar from '@/components/menu-bar.vue'
         <template #content>
           <div class="flex items-center gap-3">
             <Tag
+              severity="warn"
               icon="icon-[tabler--trending-down]"
               class="size-9! rounded-full!"
               :pt="{ icon: 'size-4.5!' }"
             />
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Low Stock Items</label>
-              <h6 class="text-3xl font-medium">8</h6>
+              <h6 class="text-3xl font-medium">
+                {{ store.restockOverview?.low_stock_items.toLocaleString('en-US') ?? 0 }}
+              </h6>
             </div>
           </div>
         </template>
@@ -41,13 +54,16 @@ import MenuBar from '@/components/menu-bar.vue'
         <template #content>
           <div class="flex items-center gap-3">
             <Tag
+              severity="danger"
               icon="icon-[tabler--circle-x]"
               class="size-9! rounded-full!"
               :pt="{ icon: 'size-4.5!' }"
             />
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Out of Stock</label>
-              <h6 class="text-3xl font-medium">2</h6>
+              <h6 class="text-3xl font-medium">
+                {{ store.restockOverview?.out_of_stock_items.toLocaleString('en-US') ?? 0 }}
+              </h6>
             </div>
           </div>
         </template>
@@ -56,13 +72,16 @@ import MenuBar from '@/components/menu-bar.vue'
         <template #content>
           <div class="flex items-center gap-3">
             <Tag
+              severity="success"
               icon="icon-[tabler--cash]"
               class="size-9! rounded-full!"
               :pt="{ icon: 'size-4.5!' }"
             />
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Total Inventory Value</label>
-              <h6 class="text-3xl font-medium">14,500,000</h6>
+              <h6 class="text-3xl font-medium">
+                {{ store.restockOverview?.total_inventory_value.toLocaleString('en-US') ?? 0 }}
+              </h6>
             </div>
           </div>
         </template>

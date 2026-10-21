@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/restock',
-    component: () => import('@/features/restock/views/restock-view.vue'),
+    component: () => import('@/features/restock/views/restock-manager.vue'),
     meta: {
       protected: true,
     },
