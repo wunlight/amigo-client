@@ -7,6 +7,7 @@ const store = useRestockStore()
 
 onMounted(() => {
   store.fetchRestockOverview()
+  store.fetchSpareparts()
 })
 </script>
 
@@ -92,20 +93,21 @@ onMounted(() => {
       <template #content>
         <div class="flex flex-col gap-3">
           <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">Restock Management</h6>
-            <Button
-              icon="icon-[tabler--package-import] text-base!"
-              label="Restock Items"
-              class="text-sm!"
-            />
+            <h6 class="self-center text-lg font-medium">Restock Manager</h6>
+            <Button icon="icon-[tabler--package-import]" label="Restock Items" />
           </div>
-          <DataTable scrollable scroll-height="flex" class="min-h-0 max-h-full text-sm!">
+          <DataTable
+            :value="store.sparepartList"
+            scrollable
+            scroll-height="flex"
+            :loading="store.isLoading"
+            class="min-h-0 max-h-full"
+          >
             <template #empty>
-              <p class="py-3 text-center">'No Data Found'</p>
+              <p class="py-3 text-center">{{ store.isLoading ? 'Loading...' : 'No Data Found' }}</p>
             </template>
-
-            <Column header="Name" />
-            <Column header="Stock" />
+            <Column field="name" header="Name" />
+            <Column field="stock" header="Stock" />
           </DataTable>
         </div>
       </template>
