@@ -11,6 +11,13 @@ const routes = [
     },
   },
   {
+    path: '/restock',
+    component: () => import('@/features/restock/views/restock-view.vue'),
+    meta: {
+      protected: true,
+    },
+  },
+  {
     path: '/spareparts',
     component: () => import('@/features/sparepart/views/sparepart-manager.vue'),
     meta: {

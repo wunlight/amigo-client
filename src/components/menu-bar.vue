@@ -16,6 +16,11 @@ const DRAWER_MENU_ITEMS = [
     command: () => navigateTo('/'),
   },
   {
+    label: 'Restock',
+    icon: 'icon-[tabler--packages]',
+    command: () => navigateTo('/restock'),
+  },
+  {
     label: 'Sparepart',
     icon: 'icon-[tabler--tools]',
     command: () => navigateTo('/spareparts'),
