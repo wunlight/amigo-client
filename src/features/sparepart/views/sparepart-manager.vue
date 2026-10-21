@@ -20,15 +20,10 @@ onMounted(() => {
       <template #content>
         <div class="flex flex-col gap-3">
           <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">Sparepart List</h6>
+            <h6 class="self-center text-lg font-medium">Sparepart Manager</h6>
             <SparepartFormDialog>
               <template #trigger="{ open }">
-                <Button
-                  icon="icon-[tabler--plus] text-base!"
-                  label="Add New Sparepart"
-                  class="text-sm!"
-                  @click="open()"
-                />
+                <Button icon="icon-[tabler--plus]" label="Add New Sparepart" @click="open()" />
               </template>
             </SparepartFormDialog>
           </div>
@@ -37,14 +32,13 @@ onMounted(() => {
             scrollable
             scroll-height="flex"
             :loading="store.isLoading"
-            class="min-h-0 max-h-full text-sm!"
+            class="min-h-0 max-h-full"
           >
             <template #empty>
               <p class="py-3 text-center">
                 {{ store.isLoading ? 'Loading...' : 'No Data Found!' }}
               </p>
             </template>
-
             <Column field="name" header="Name" />
             <Column field="selling_price" header="Price">
               <template #body="{ data }">

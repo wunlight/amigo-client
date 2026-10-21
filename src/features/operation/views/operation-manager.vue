@@ -23,12 +23,7 @@ onMounted(() => {
             <h6 class="self-center text-lg font-medium">Operation List</h6>
             <OperationFormDialog>
               <template #trigger="{ open }">
-                <Button
-                  icon="icon-[tabler--plus] text-base!"
-                  label="Add New Operation"
-                  class="text-sm!"
-                  @click="open()"
-                />
+                <Button icon="icon-[tabler--plus]" label="Add New Operation" @click="open()" />
               </template>
             </OperationFormDialog>
           </div>
@@ -37,14 +32,13 @@ onMounted(() => {
             scrollable
             scroll-height="flex"
             :loading="store.isLoading"
-            class="min-h-0 max-h-full text-sm!"
+            class="min-h-0 max-h-full"
           >
             <template #empty>
               <p class="py-3 text-center">
                 {{ store.isLoading ? 'Loading...' : 'No Data Found!' }}
               </p>
             </template>
-
             <Column field="name" header="Name" />
             <Column field="selling_price" header="Price">
               <template #body="{ data }">

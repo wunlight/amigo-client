@@ -23,12 +23,7 @@ onMounted(() => {
             <h6 class="self-center text-lg font-medium">User List</h6>
             <UserFormDialog>
               <template #trigger="{ open }">
-                <Button
-                  icon="icon-[tabler--plus] text-base!"
-                  label="Add New User"
-                  class="text-sm!"
-                  @click="open()"
-                />
+                <Button icon="icon-[tabler--plus]" label="Add New User" @click="open()" />
               </template>
             </UserFormDialog>
           </div>
@@ -37,7 +32,7 @@ onMounted(() => {
             scrollable
             scroll-height="flex"
             :loading="userStore.isLoading"
-            class="min-h-0 max-h-full text-sm!"
+            class="min-h-0 max-h-full"
           >
             <template #empty>
               <p class="py-3 text-center">
