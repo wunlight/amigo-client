@@ -11,8 +11,8 @@ const routes = [
     },
   },
   {
-    path: '/restock',
-    component: () => import('@/features/restock/views/restock-manager.vue'),
+    path: '/stock-manager',
+    component: () => import('@/features/stock/views/stock-manager.vue'),
     meta: {
       protected: true,
     },

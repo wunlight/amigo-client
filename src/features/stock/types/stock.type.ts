@@ -1,4 +1,4 @@
-export type RestockOverview = {
+export type StockOverview = {
   total_spareparts: number
   low_stock_items: number
   out_of_stock_items: number

@@ -16,9 +16,9 @@ const DRAWER_MENU_ITEMS = [
     command: () => navigateTo('/'),
   },
   {
-    label: 'Restock',
+    label: 'Stock Manager',
     icon: 'icon-[tabler--packages]',
-    command: () => navigateTo('/restock'),
+    command: () => navigateTo('/stock-manager'),
   },
   {
     label: 'Sparepart',

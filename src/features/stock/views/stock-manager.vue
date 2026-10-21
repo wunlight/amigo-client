@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import MenuBar from '@/components/menu-bar.vue'
+import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
 import { onMounted } from 'vue'
-import { useRestockStore } from '../store/restock-store'
+import OpnameFormDialog from '../components/opname/opname-form-dialog.vue'
+import RestockFormDialog from '../components/restock/restock-form-dialog.vue'
+import { useStockStore } from '../stores/use-stock-store.ts'
 
-const store = useRestockStore()
+const store = useStockStore()
+const sparepartStore = useSparepartStore()
 
 onMounted(() => {
-  store.fetchRestockOverview()
-  store.fetchSpareparts()
+  store.fetchStockOverview()
 })
 </script>
 
@@ -27,7 +30,7 @@ onMounted(() => {
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Total Spareparts</label>
               <h6 class="text-3xl font-medium">
-                {{ store.restockOverview?.total_spareparts.toLocaleString('en-US') ?? 0 }}
+                {{ store.stockOverview?.total_spareparts.toLocaleString('en-US') ?? 0 }}
               </h6>
             </div>
           </div>
@@ -45,7 +48,7 @@ onMounted(() => {
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Low Stock Items</label>
               <h6 class="text-3xl font-medium">
-                {{ store.restockOverview?.low_stock_items.toLocaleString('en-US') ?? 0 }}
+                {{ store.stockOverview?.low_stock_items.toLocaleString('en-US') ?? 0 }}
               </h6>
             </div>
           </div>
@@ -63,7 +66,7 @@ onMounted(() => {
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Out of Stock</label>
               <h6 class="text-3xl font-medium">
-                {{ store.restockOverview?.out_of_stock_items.toLocaleString('en-US') ?? 0 }}
+                {{ store.stockOverview?.out_of_stock_items.toLocaleString('en-US') ?? 0 }}
               </h6>
             </div>
           </div>
@@ -81,7 +84,7 @@ onMounted(() => {
             <div class="flex flex-col gap-1.5">
               <label class="text-sm text-zinc-500">Total Inventory Value</label>
               <h6 class="text-3xl font-medium">
-                {{ store.restockOverview?.total_inventory_value.toLocaleString('en-US') ?? 0 }}
+                {{ store.stockOverview?.total_inventory_value.toLocaleString('en-US') ?? 0 }}
               </h6>
             </div>
           </div>
@@ -93,14 +96,35 @@ onMounted(() => {
       <template #content>
         <div class="flex flex-col gap-3">
           <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">Restock Manager</h6>
-            <Button icon="icon-[tabler--package-import]" label="Restock Items" />
+            <h6 class="self-center text-lg font-medium">Stock Manager</h6>
+            <div class="flex gap-3">
+              <RestockFormDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--package-import]"
+                    label="Restock Items"
+                    outlined
+                    @click="open"
+                  />
+                </template>
+              </RestockFormDialog>
+              <OpnameFormDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--clipboard-check]"
+                    label="Stock Opname"
+                    outlined
+                    @click="open"
+                  />
+                </template>
+              </OpnameFormDialog>
+            </div>
           </div>
           <DataTable
-            :value="store.sparepartList"
+            :value="sparepartStore.sparepartList"
             scrollable
             scroll-height="flex"
-            :loading="store.isLoading"
+            :loading="sparepartStore.isLoading"
             class="min-h-0 max-h-full"
           >
             <template #empty>
@@ -108,6 +132,11 @@ onMounted(() => {
             </template>
             <Column field="name" header="Name" />
             <Column field="stock" header="Stock" />
+            <Column field="selling_price" header="Selling Price">
+              <template #body="{ data }">
+                <p>Rp. {{ data.selling_price.toLocaleString('en-US') }}</p>
+              </template>
+            </Column>
           </DataTable>
         </div>
       </template>

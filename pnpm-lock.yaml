@@ -190,6 +190,9 @@ importers:
       primevue:
         specifier: 4.5.5
         version: 4.5.5(vue@3.5.44(typescript@6.0.3))
+      uuid:
+        specifier: ^14.0.3
+        version: 14.0.3
       vue:
         specifier: ^3.5.42
         version: 3.5.44(typescript@6.0.3)
@@ -1883,6 +1886,10 @@ packages:
       webpack:
         optional: true
 
+  uuid@14.0.3:
+    resolution: {integrity: sha512-Sc5u1VVln93y1Xnz4R+CunOZc7R9LUcTmhj7Rc7Eg3HVcf7rVn2FOoa812fe0W8p3jD7xeoGSYbfqCGGH2B6xw==}
+    hasBin: true
+
   vite-plus@1.2.0:
     resolution: {integrity: sha512-u4INxnrq9LxwyA3nr33Qg6VltJiKz+ILSlZuZnQJecozUvj1/rVctkw6Igh/Xkd0En2rst7m0xE9sG7uzzZS7A==}
     engines: {node: ^22.18.0 || ^24.11.0 || >=26.0.0}
@@ -3358,6 +3365,8 @@ snapshots:
       webpack-virtual-modules: 0.6.2
     optionalDependencies:
       vite: '@voidzero-dev/vite-plus-core@1.2.0(@types/node@24.19.2)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))'
+
+  uuid@14.0.3: {}
 
   vite-plus@1.2.0(@types/node@24.19.2)(@vitest/ui@5.0.4)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(happy-dom@21.0.1)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)):
     dependencies:
