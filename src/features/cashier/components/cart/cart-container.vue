@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
+import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
 import { computed } from 'vue'
 import { checkout } from '../../api/index.ts'
 import { useCartStore } from '../../stores/use-cart-store'
@@ -7,6 +8,7 @@ import CartItem from './cart-item.vue'
 import CartNotesDialog from './cart-notes-dialog.vue'
 
 const store = useCartStore()
+const sparepartStore = useSparepartStore()
 
 const totalAmount = computed(() => {
   return {
@@ -23,6 +25,7 @@ async function handleCheckout() {
     const { data } = await checkout(payload)
     if (data.success) {
       store.clearCart()
+      sparepartStore.fetchSpareparts()
     }
   } catch (e) {
     console.error(e)
