@@ -14,7 +14,6 @@ const props = defineProps<{
 const form = ref({
   name: '',
   selling_price: 0,
-  initial_stock: 0,
 })
 
 async function loadOperationData(id: string) {
@@ -24,7 +23,6 @@ async function loadOperationData(id: string) {
     form.value = {
       name: data.data.name,
       selling_price: data.data.selling_price,
-      initial_stock: 0,
     }
   } catch (e) {
     console.error(e)

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import MenuBar from '@/components/menu-bar.vue'
 import { onMounted } from 'vue'
+import DeleteSparepartDialog from '../components/delete-sparepart-dialog.vue'
+import SparepartFormDialog from '../components/sparepart-form-dialog.vue'
 import { useSparepartStore } from '../stores/use-sparepart-store.ts'
 
 const store = useSparepartStore()
@@ -19,15 +21,16 @@ onMounted(() => {
         <div class="flex flex-col gap-3">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">Sparepart List</h6>
-            <!-- <SparepartFormDialog>
-              <template #trigger="{ open }"> -->
-            <Button
-              icon="icon-[tabler--plus] text-base!"
-              label="Add New Sparepart"
-              class="text-sm!"
-            />
-            <!-- </template>
-            </SparepartFormDialog> -->
+            <SparepartFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--plus] text-base!"
+                  label="Add New Sparepart"
+                  class="text-sm!"
+                  @click="open()"
+                />
+              </template>
+            </SparepartFormDialog>
           </div>
           <DataTable
             :value="store.sparepartList"
@@ -56,16 +59,28 @@ onMounted(() => {
             <Column>
               <template #body="{ data }">
                 <div class="flex justify-end gap-3">
-                  <!-- <SparepartFormDialog>
-                    <template #trigger="{ open }"> -->
-                  <Button icon="icon-[tabler--pencil]" severity="info" outlined rounded />
-                  <!-- </template>
+                  <SparepartFormDialog>
+                    <template #trigger="{ open }">
+                      <Button
+                        icon="icon-[tabler--pencil]"
+                        severity="info"
+                        outlined
+                        rounded
+                        @click="open(data.id)"
+                      />
+                    </template>
                   </SparepartFormDialog>
                   <DeleteSparepartDialog>
-                    <template #trigger="{ open }"> -->
-                  <Button icon="icon-[tabler--trash]" severity="danger" outlined rounded />
-                  <!-- </template>
-                  </DeleteSparepartDialog> -->
+                    <template #trigger="{ open }">
+                      <Button
+                        icon="icon-[tabler--trash]"
+                        severity="danger"
+                        outlined
+                        rounded
+                        @click="open(data.id)"
+                      />
+                    </template>
+                  </DeleteSparepartDialog>
                 </div>
               </template>
             </Column>

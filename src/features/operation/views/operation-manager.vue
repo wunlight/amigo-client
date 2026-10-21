@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import MenuBar from '@/components/menu-bar.vue'
 import { onMounted } from 'vue'
+import DeleteOperationDialog from '../components/delete-operation-dialog.vue'
+import OperationFormDialog from '../components/operation-form-dialog.vue'
 import { useOperationStore } from '../stores/use-operation-store.ts'
 
 const store = useOperationStore()
@@ -19,15 +21,16 @@ onMounted(() => {
         <div class="flex flex-col gap-3">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">Operation List</h6>
-            <!-- <OperationFormDialog>
-              <template #trigger="{ open }"> -->
-            <Button
-              icon="icon-[tabler--plus] text-base!"
-              label="Add New Operation"
-              class="text-sm!"
-            />
-            <!-- </template>
-            </OperationFormDialog> -->
+            <OperationFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--plus] text-base!"
+                  label="Add New Operation"
+                  class="text-sm!"
+                  @click="open()"
+                />
+              </template>
+            </OperationFormDialog>
           </div>
           <DataTable
             :value="store.operationList"
@@ -51,16 +54,28 @@ onMounted(() => {
             <Column>
               <template #body="{ data }">
                 <div class="flex justify-end gap-3">
-                  <!-- <OperationFormDialog>
-                    <template #trigger="{ open }"> -->
-                  <Button icon="icon-[tabler--pencil]" severity="info" outlined rounded />
-                  <!-- </template>
+                  <OperationFormDialog>
+                    <template #trigger="{ open }">
+                      <Button
+                        icon="icon-[tabler--pencil]"
+                        severity="info"
+                        outlined
+                        rounded
+                        @click="open(data.id)"
+                      />
+                    </template>
                   </OperationFormDialog>
                   <DeleteOperationDialog>
-                    <template #trigger="{ open }"> -->
-                  <Button icon="icon-[tabler--trash]" severity="danger" outlined rounded />
-                  <!-- </template>
-                  </DeleteOperationDialog> -->
+                    <template #trigger="{ open }">
+                      <Button
+                        icon="icon-[tabler--trash]"
+                        severity="danger"
+                        outlined
+                        rounded
+                        @click="open(data.id)"
+                      />
+                    </template>
+                  </DeleteOperationDialog>
                 </div>
               </template>
             </Column>
