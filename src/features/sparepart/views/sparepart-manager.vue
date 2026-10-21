@@ -42,7 +42,7 @@ onMounted(() => {
             <Column field="name" header="Name" />
             <Column field="selling_price" header="Price">
               <template #body="{ data }">
-                <p>{{ data.selling_price.toLocaleString('en-US') }}</p>
+                <p>Rp. {{ data.selling_price.toLocaleString('en-US') }}</p>
               </template>
             </Column>
             <Column field="stock" header="Stock">
