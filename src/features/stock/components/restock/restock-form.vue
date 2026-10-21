@@ -11,6 +11,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
 const toast = useToast()
 
 const sparepartStore = useSparepartStore()

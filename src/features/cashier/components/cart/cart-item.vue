@@ -3,11 +3,11 @@ import { ref } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store'
 import type { CartItem } from '../../types/cart.type'
 
-type CartItemProps = {
+type Props = {
   data: CartItem
 }
 
-const props = defineProps<CartItemProps>()
+const props = defineProps<Props>()
 
 const store = useCartStore()
 
@@ -23,13 +23,13 @@ function handleUpdatePrice() {
 <template>
   <div class="flex items-center justify-between gap-3 p-3">
     <div class="flex flex-col gap-1.5 overflow-hidden">
-      <span class="font-medium text-sm truncate">{{ data.name }}</span>
+      <span class="font-medium truncate">{{ data.name }}</span>
       <div class="group/item flex gap-1.5">
         <template v-if="isEditPrice">
           <input
             v-model="itemPrice"
             type="text"
-            class="h-4 min-w-0 text-xs border-b border-zinc-300 dark:border-zinc-700 outline-0"
+            class="h-5 min-w-0 text-sm border-b border-zinc-300 dark:border-zinc-700 outline-0"
           />
           <Button
             icon="icon-[tabler--x]"
@@ -46,7 +46,7 @@ function handleUpdatePrice() {
           />
         </template>
         <template v-else>
-          <span class="text-xs text-zinc-500">Rp. {{ data.price.toLocaleString('en-US') }}</span>
+          <span class="text-sm text-zinc-500">Rp. {{ data.price.toLocaleString('en-US') }}</span>
           <Button
             icon="icon-[tabler--pencil]"
             severity="secondary"
@@ -74,7 +74,7 @@ function handleUpdatePrice() {
           @click="store.decreaseQty(data.id)"
         />
         <div
-          class="grid place-content-center size-6 text-xs bg-zinc-100 dark:bg-zinc-950 rounded-md"
+          class="grid place-content-center size-6 text-sm bg-zinc-100 dark:bg-zinc-950 rounded-md"
         >
           {{ store.getQty(data.id) }}
         </div>

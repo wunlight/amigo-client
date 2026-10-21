@@ -6,11 +6,11 @@ import { computed, onMounted } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
 import SparepartItem from './sparepart-item.vue'
 
-type SparepartCatalog = {
+type Props = {
   searchQuery: string
 }
 
-const props = defineProps<SparepartCatalog>()
+const props = defineProps<Props>()
 
 const sparepartStore = useSparepartStore()
 const cartStore = useCartStore()

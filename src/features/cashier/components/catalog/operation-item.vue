@@ -2,11 +2,11 @@
 import type { OperationDTO } from '@/features/operation/types/operation.type'
 import { useCartStore } from '../../stores/use-cart-store'
 
-type OperationItemProps = {
+type Props = {
   data: OperationDTO
 }
 
-const props = defineProps<OperationItemProps>()
+const props = defineProps<Props>()
 
 const cartStore = useCartStore()
 

@@ -2,11 +2,11 @@
 import type { SparepartDTO } from '@/features/sparepart/types/sparepart.type'
 import { useCartStore } from '../../stores/use-cart-store'
 
-type SparepartItemProps = {
+type Props = {
   data: SparepartDTO
 }
 
-const props = defineProps<SparepartItemProps>()
+const props = defineProps<Props>()
 
 const cartStore = useCartStore()
 

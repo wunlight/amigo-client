@@ -41,7 +41,7 @@ async function handleCheckout() {
       class="flex items-center justify-between gap-3 pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
       <div class="flex flex-col overflow-hidden">
-        <h6 class="font-bold">Transaction Cart</h6>
+        <h6 class="font-medium text-lg">Transaction Cart</h6>
         <p v-if="store.notes" class="truncate text-xs text-zinc-500">{{ store.notes }}</p>
       </div>
       <Button
@@ -61,31 +61,26 @@ async function handleCheckout() {
     >
       <CartItem v-for="item in store.items" :key="item.id" :data="item" />
     </ScrollContainer>
-    <p v-else class="h-full py-6 text-sm text-center text-zinc-500">No items in cart</p>
+    <p v-else class="h-full py-6 text-center text-zinc-500">No items in cart</p>
 
-    <div class="flex flex-col gap-3 pt-3 border-t border-zinc-300 dark:border-zinc-700">
-      <div class="flex justify-between">
-        <span class="text-sm text-zinc-500">Spareparts</span>
-        <span class="text-sm text-zinc-500"
-          >Rp. {{ totalAmount.sparepart.toLocaleString('en-US') }}</span
-        >
+    <div class="flex flex-col gap-1.5 border-t border-zinc-300 dark:border-zinc-700">
+      <div class="flex justify-between px-1.5 pt-3">
+        <span class="text-zinc-500">Spareparts</span>
+        <span class="text-zinc-500">Rp. {{ totalAmount.sparepart.toLocaleString('en-US') }}</span>
       </div>
-      <div class="flex justify-between">
-        <span class="text-sm text-zinc-500">Operations</span>
-        <span class="text-sm text-zinc-500"
-          >Rp. {{ totalAmount.operation.toLocaleString('en-US') }}</span
-        >
+      <div class="flex justify-between px-1.5">
+        <span class="text-zinc-500">Operations</span>
+        <span class="text-zinc-500">Rp. {{ totalAmount.operation.toLocaleString('en-US') }}</span>
       </div>
-      <div class="flex justify-between">
-        <span class="text-sm font-medium">Total</span>
-        <span class="text-sm font-medium">Rp. {{ totalAmount.all.toLocaleString('en-US') }}</span>
+      <div class="flex justify-between px-1.5 pb-1.5">
+        <span class="font-medium">Total</span>
+        <span class="font-medium">Rp. {{ totalAmount.all.toLocaleString('en-US') }}</span>
       </div>
       <div class="flex gap-3">
         <Button
           label="Process Transaction"
           fluid
           :disabled="store.items.length <= 0"
-          class="text-sm!"
           @click="handleCheckout"
         />
         <CartNotesDialog>

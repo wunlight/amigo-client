@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUpdated, ref } from 'vue'
 
-type ScrollContainer = {
+type Props = {
   direction: 'vertical' | 'horizontal'
   contentClass?: string
 }
 
-const props = withDefaults(defineProps<ScrollContainer>(), {
+const props = withDefaults(defineProps<Props>(), {
   direction: 'vertical',
 })
 

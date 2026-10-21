@@ -3,13 +3,15 @@ import { useToast } from 'primevue'
 import { onMounted, ref } from 'vue'
 import { createUser, getUserById, updateUser } from '../api'
 
-const toast = useToast()
-
-const props = defineProps<{
+type Props = {
   closeDialog: (refetch?: boolean) => void
   isUpdate: boolean
   userId: string | null
-}>()
+}
+
+const props = defineProps<Props>()
+
+const toast = useToast()
 
 const form = ref({
   name: '',

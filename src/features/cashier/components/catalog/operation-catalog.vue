@@ -6,11 +6,11 @@ import { computed, onMounted } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
 import OperationItem from './operation-item.vue'
 
-type OperationCatalog = {
+type Props = {
   searchQuery: string
 }
 
-const props = defineProps<OperationCatalog>()
+const props = defineProps<Props>()
 
 const operationStore = useOperationStore()
 const cartStore = useCartStore()
