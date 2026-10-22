@@ -4,6 +4,13 @@ import { useAuthStore } from './features/auth/stores/use-auth-store'
 const routes = [
   { path: '/login', component: () => import('@/features/auth/views/login-view.vue') },
   {
+    path: '/dashboard',
+    component: () => import('@/features/dashboard/views/dashboard-view.vue'),
+    meta: {
+      protected: true,
+    },
+  },
+  {
     path: '/',
     component: () => import('@/features/cashier/views/cashier-view.vue'),
     meta: {

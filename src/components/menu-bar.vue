@@ -11,6 +11,11 @@ const theme = useTheme()
 
 const DRAWER_MENU_ITEMS = [
   {
+    label: 'Dashboard',
+    icon: 'icon-[tabler--dashboard]',
+    command: () => navigateTo('/dashboard'),
+  },
+  {
     label: 'Cashier',
     icon: 'icon-[tabler--shopping-bag]',
     command: () => navigateTo('/'),
