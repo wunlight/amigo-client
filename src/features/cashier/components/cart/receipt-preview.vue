@@ -23,8 +23,7 @@ const formatDate = (dateString: string) => {
 
 const generateWhatsappMessage = () => {
   const receiptText = `
-*NOTA TRANSAKSI*
-
+*AMIGO MOTOR - TRANSACTION RECEIPT*
 ID Transaksi: ${props.receipt.sale_id}
 Tanggal: ${formatDate(props.receipt.created_at)}
 
@@ -40,7 +39,6 @@ ${props.receipt.items
 
 ${props.receipt.notes ? `\n*Catatan:*\n${props.receipt.notes}\n` : ''}
 *Total: Rp. ${props.receipt.total_amount.toLocaleString('en-US')}*
-
 Terima kasih telah bertransaksi!
   `.trim()
 

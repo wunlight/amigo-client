@@ -49,6 +49,7 @@ export const useCartStore = defineStore('cart', {
       items: state.items.map((i) => ({
         type: i.type,
         id: i.id,
+        name: i.name,
         quantity: i.quantity,
         unit_price: i.price,
       })),

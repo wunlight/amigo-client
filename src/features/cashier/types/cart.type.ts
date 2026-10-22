@@ -12,6 +12,7 @@ export type CartItem = {
 export type CheckoutItem = {
   type: CartItemType
   id: string
+  name: string
   quantity: number
   unit_price: number
 }

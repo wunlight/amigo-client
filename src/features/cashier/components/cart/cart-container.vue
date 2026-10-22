@@ -122,7 +122,7 @@ const closeReceipt = () => {
       </div>
     </div>
 
-    <Dialog v-model:visible="showDialog" modal @hide="closeReceipt">
+    <Dialog v-model:visible="showDialog" modal header=" " @hide="closeReceipt">
       <div class="relative">
         <div v-if="isLoading" class="absolute inset-0 grid place-content-center bg-black/50">
           <ProgressSpinner />
