@@ -22,6 +22,19 @@ export type CheckoutPayload = {
   idempotency_key: string
 }
 
+export type CheckoutReceiptItem = {
+  type: CartItemType
+  id: string
+  name: string
+  quantity: number
+  unit_price: number
+  subtotal: number
+}
+
 export type CheckoutResponse = {
   sale_id: string
+  created_at: string
+  total_amount: number
+  items: CheckoutReceiptItem[]
+  notes?: string
 }

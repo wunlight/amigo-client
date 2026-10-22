@@ -23,6 +23,7 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     MenuBar: typeof import('./src/components/menu-bar.vue')['default']
     Password: typeof import('primevue/password')['default']
+    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollContainer: typeof import('./src/components/scroll-container.vue')['default']

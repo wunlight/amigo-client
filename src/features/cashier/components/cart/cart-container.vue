@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
 import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { checkout } from '../../api/index.ts'
 import { useCartStore } from '../../stores/use-cart-store'
+import type { CheckoutResponse } from '../../types/cart.type'
 import CartItem from './cart-item.vue'
 import CartNotesDialog from './cart-notes-dialog.vue'
+import ReceiptPreview from './receipt-preview.vue'
 
 const store = useCartStore()
 const sparepartStore = useSparepartStore()
+
+const showDialog = ref<boolean>(false)
+const isLoading = ref<boolean>(false)
+const showReceipt = ref<boolean>(false)
+const receiptData = ref<CheckoutResponse | null>(null)
 
 const totalAmount = computed(() => {
   return {
@@ -19,6 +26,9 @@ const totalAmount = computed(() => {
 })
 
 async function handleCheckout() {
+  showDialog.value = true
+  isLoading.value = true
+
   const payload = store.getCheckoutPayload
 
   try {
@@ -26,10 +36,25 @@ async function handleCheckout() {
     if (data.success) {
       store.clearCart()
       sparepartStore.fetchSpareparts()
+      openReceipt(data.data)
     }
   } catch (e) {
     console.error(e)
+    showDialog.value = false
+  } finally {
+    isLoading.value = false
   }
+}
+
+function openReceipt(data: CheckoutResponse) {
+  receiptData.value = data
+  showReceipt.value = true
+}
+
+const closeReceipt = () => {
+  showDialog.value = false
+  showReceipt.value = false
+  receiptData.value = null
 }
 </script>
 
@@ -96,5 +121,14 @@ async function handleCheckout() {
         </CartNotesDialog>
       </div>
     </div>
+
+    <Dialog v-model:visible="showDialog" modal @hide="closeReceipt">
+      <div class="relative">
+        <div v-if="isLoading" class="absolute inset-0 grid place-content-center bg-black/50">
+          <ProgressSpinner />
+        </div>
+        <ReceiptPreview v-if="showReceipt && receiptData" :receipt="receiptData" />
+      </div>
+    </Dialog>
   </div>
 </template>
