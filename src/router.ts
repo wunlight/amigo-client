@@ -45,6 +45,13 @@ const routes = [
       protected: true,
     },
   },
+  {
+    path: '/sales',
+    component: () => import('@/features/sale/views/sale-manager.vue'),
+    meta: {
+      protected: true,
+    },
+  },
 ]
 
 export const router = createRouter({

@@ -40,6 +40,11 @@ const DRAWER_MENU_ITEMS = [
     icon: 'icon-[tabler--user]',
     command: () => navigateTo('/users'),
   },
+  {
+    label: 'Sales',
+    icon: 'icon-[tabler--shopping-cart]',
+    command: () => navigateTo('/sales'),
+  },
 ]
 const USER_MENU_ITEMS = [
   {
