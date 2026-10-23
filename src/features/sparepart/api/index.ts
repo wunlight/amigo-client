@@ -6,7 +6,13 @@ import type {
   UpdateSparepartPayload,
 } from '../types/sparepart.type'
 
-export const listSpareparts = () => apiClient.get<PaginatedResponse<SparepartDTO>>(`/v1/spareparts`)
+export const listSpareparts = (page: number = 1, perPage: number = 10) =>
+  apiClient.get<PaginatedResponse<SparepartDTO>>(`/v1/spareparts`, {
+    params: {
+      page,
+      per_page: perPage,
+    },
+  })
 
 export const getSparepartById = (id: string) =>
   apiClient.get<SuccessResponse<SparepartDTO>>(`/v1/spareparts/${id}`)

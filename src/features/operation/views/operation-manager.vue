@@ -14,42 +14,39 @@ import OperationTable from '../components/operation-table.vue'
       }"
     >
       <template #content>
-        <div class="flex flex-col gap-3 min-h-0 max-h-full">
-          <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">Operation List</h6>
+        <OperationTable title="Operation List">
+          <template #table-actions>
             <OperationFormDialog>
               <template #trigger="{ open }">
                 <Button icon="icon-[tabler--plus]" label="Add New Operation" @click="open()" />
               </template>
             </OperationFormDialog>
-          </div>
-          <OperationTable>
-            <template #actions="{ data }">
-              <OperationFormDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--pencil]"
-                    severity="info"
-                    outlined
-                    rounded
-                    @click="open(data.id)"
-                  />
-                </template>
-              </OperationFormDialog>
-              <DeleteOperationDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--trash]"
-                    severity="danger"
-                    outlined
-                    rounded
-                    @click="open(data.id)"
-                  />
-                </template>
-              </DeleteOperationDialog>
-            </template>
-          </OperationTable>
-        </div>
+          </template>
+          <template #actions="{ data }">
+            <OperationFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--pencil]"
+                  severity="info"
+                  outlined
+                  rounded
+                  @click="open(data.id)"
+                />
+              </template>
+            </OperationFormDialog>
+            <DeleteOperationDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--trash]"
+                  severity="danger"
+                  outlined
+                  rounded
+                  @click="open(data.id)"
+                />
+              </template>
+            </DeleteOperationDialog>
+          </template>
+        </OperationTable>
       </template>
     </Card>
   </div>

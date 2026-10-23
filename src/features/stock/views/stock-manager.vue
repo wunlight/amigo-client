@@ -50,34 +50,30 @@ onMounted(() => {
       }"
     >
       <template #content>
-        <div class="flex flex-col gap-3 min-h-0 max-h-full">
-          <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">Stock Manager</h6>
-            <div class="flex gap-3">
-              <RestockFormDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--package-import]"
-                    label="Restock Items"
-                    outlined
-                    @click="open"
-                  />
-                </template>
-              </RestockFormDialog>
-              <OpnameFormDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--clipboard-check]"
-                    label="Stock Opname"
-                    outlined
-                    @click="open"
-                  />
-                </template>
-              </OpnameFormDialog>
-            </div>
-          </div>
-          <SparepartTable />
-        </div>
+        <SparepartTable title="Stock Manager">
+          <template #table-actions>
+            <RestockFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--package-import]"
+                  label="Restock Items"
+                  outlined
+                  @click="open"
+                />
+              </template>
+            </RestockFormDialog>
+            <OpnameFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--clipboard-check]"
+                  label="Stock Opname"
+                  outlined
+                  @click="open"
+                />
+              </template>
+            </OpnameFormDialog>
+          </template>
+        </SparepartTable>
       </template>
     </Card>
   </div>

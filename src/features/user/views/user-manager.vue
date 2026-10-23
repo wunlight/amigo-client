@@ -14,42 +14,39 @@ import UserTable from '../components/user-table.vue'
       }"
     >
       <template #content>
-        <div class="flex flex-col gap-3 min-h-0 max-h-full">
-          <div class="flex justify-between">
-            <h6 class="self-center text-lg font-medium">User List</h6>
+        <UserTable title="User List">
+          <template #table-actions>
             <UserFormDialog>
               <template #trigger="{ open }">
                 <Button icon="icon-[tabler--plus]" label="Add New User" @click="open()" />
               </template>
             </UserFormDialog>
-          </div>
-          <UserTable>
-            <template #actions="{ data }">
-              <UserFormDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--pencil]"
-                    severity="info"
-                    outlined
-                    rounded
-                    @click="open(data.id)"
-                  />
-                </template>
-              </UserFormDialog>
-              <DeleteUserDialog>
-                <template #trigger="{ open }">
-                  <Button
-                    icon="icon-[tabler--trash]"
-                    severity="danger"
-                    outlined
-                    rounded
-                    @click="open(data.id)"
-                  />
-                </template>
-              </DeleteUserDialog>
-            </template>
-          </UserTable>
-        </div>
+          </template>
+          <template #actions="{ data }">
+            <UserFormDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--pencil]"
+                  severity="info"
+                  outlined
+                  rounded
+                  @click="open(data.id)"
+                />
+              </template>
+            </UserFormDialog>
+            <DeleteUserDialog>
+              <template #trigger="{ open }">
+                <Button
+                  icon="icon-[tabler--trash]"
+                  severity="danger"
+                  outlined
+                  rounded
+                  @click="open(data.id)"
+                />
+              </template>
+            </DeleteUserDialog>
+          </template>
+        </UserTable>
       </template>
     </Card>
   </div>

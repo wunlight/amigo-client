@@ -2,7 +2,13 @@ import type { PaginatedResponse, SuccessResponse } from '@/types/response.type'
 import { apiClient } from '@/utils/api-client'
 import type { CreateUserPayload, UpdateUserPayload, UserDTO } from '../types/user.type'
 
-export const listUsers = () => apiClient.get<PaginatedResponse<UserDTO>>(`/v1/users`)
+export const listUsers = (page: number = 1, perPage: number = 10) =>
+  apiClient.get<PaginatedResponse<UserDTO>>(`/v1/users`, {
+    params: {
+      page,
+      per_page: perPage,
+    },
+  })
 
 export const getUserById = (id: string) =>
   apiClient.get<SuccessResponse<UserDTO>>(`/v1/users/${id}`)

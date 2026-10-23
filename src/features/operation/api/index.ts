@@ -6,7 +6,13 @@ import type {
   UpdateOperationPayload,
 } from '../types/operation.type'
 
-export const listOperations = () => apiClient.get<PaginatedResponse<OperationDTO>>(`/v1/operations`)
+export const listOperations = (page: number = 1, perPage: number = 10) =>
+  apiClient.get<PaginatedResponse<OperationDTO>>(`/v1/operations`, {
+    params: {
+      page,
+      per_page: perPage,
+    },
+  })
 
 export const getOperationById = (id: string) =>
   apiClient.get<SuccessResponse<OperationDTO>>(`/v1/operations/${id}`)
