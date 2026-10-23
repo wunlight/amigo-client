@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import MenuBar from '@/components/menu-bar.vue'
-import { onMounted } from 'vue'
 import DeleteOperationDialog from '../components/delete-operation-dialog.vue'
 import OperationFormDialog from '../components/operation-form-dialog.vue'
-import { useOperationStore } from '../stores/use-operation-store.ts'
-
-const store = useOperationStore()
-
-onMounted(() => {
-  store.fetchOperations()
-})
+import OperationTable from '../components/operation-table.vue'
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-1.5 h-svh bg-zinc-100 dark:bg-zinc-950 overflow-hidden">
-    <MenuBar />
-
-    <Card class="border border-zinc-300 dark:border-zinc-700">
+  <div class="flex flex-col gap-3 min-h-0">
+    <Card
+      :pt="{
+        root: 'min-h-0 border border-zinc-300 dark:border-zinc-700 overflow-hidden',
+        body: 'min-h-0 p-4.5!',
+        content: 'min-h-0',
+      }"
+    >
       <template #content>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 min-h-0 max-h-full">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">Operation List</h6>
             <OperationFormDialog>
@@ -27,53 +23,32 @@ onMounted(() => {
               </template>
             </OperationFormDialog>
           </div>
-          <DataTable
-            :value="store.operationList"
-            scrollable
-            scroll-height="flex"
-            :loading="store.isLoading"
-            class="min-h-0 max-h-full"
-          >
-            <template #empty>
-              <p class="py-3 text-center">
-                {{ store.isLoading ? 'Loading...' : 'No Data Found!' }}
-              </p>
+          <OperationTable>
+            <template #actions="{ data }">
+              <OperationFormDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--pencil]"
+                    severity="info"
+                    outlined
+                    rounded
+                    @click="open(data.id)"
+                  />
+                </template>
+              </OperationFormDialog>
+              <DeleteOperationDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--trash]"
+                    severity="danger"
+                    outlined
+                    rounded
+                    @click="open(data.id)"
+                  />
+                </template>
+              </DeleteOperationDialog>
             </template>
-            <Column field="name" header="Name" />
-            <Column field="selling_price" header="Price">
-              <template #body="{ data }">
-                <p>{{ data.selling_price.toLocaleString('en-US') }}</p>
-              </template>
-            </Column>
-            <Column>
-              <template #body="{ data }">
-                <div class="flex justify-end gap-3">
-                  <OperationFormDialog>
-                    <template #trigger="{ open }">
-                      <Button
-                        icon="icon-[tabler--pencil]"
-                        severity="info"
-                        outlined
-                        rounded
-                        @click="open(data.id)"
-                      />
-                    </template>
-                  </OperationFormDialog>
-                  <DeleteOperationDialog>
-                    <template #trigger="{ open }">
-                      <Button
-                        icon="icon-[tabler--trash]"
-                        severity="danger"
-                        outlined
-                        rounded
-                        @click="open(data.id)"
-                      />
-                    </template>
-                  </DeleteOperationDialog>
-                </div>
-              </template>
-            </Column>
-          </DataTable>
+          </OperationTable>
         </div>
       </template>
     </Card>
