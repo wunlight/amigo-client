@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import MenuBar from '@/components/menu-bar.vue'
-import { onMounted } from 'vue'
 import DeleteUserDialog from '../components/delete-user-dialog.vue'
 import UserFormDialog from '../components/user-form-dialog.vue'
-import { useUserStore } from '../stores/use-user-store.ts'
-
-const userStore = useUserStore()
-
-onMounted(() => {
-  userStore.fetchUsers()
-})
+import UserTable from '../components/user-table.vue'
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-1.5 h-svh bg-zinc-100 dark:bg-zinc-950 overflow-hidden">
-    <MenuBar />
-
-    <Card class="border border-zinc-300 dark:border-zinc-700">
+  <div class="flex flex-col gap-3">
+    <Card
+      :pt="{
+        root: 'min-h-0 border border-zinc-300 dark:border-zinc-700 overflow-hidden',
+        body: 'min-h-0 p-4.5!',
+        content: 'min-h-0',
+      }"
+    >
       <template #content>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 min-h-0 max-h-full">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">User List</h6>
             <UserFormDialog>
@@ -27,49 +23,32 @@ onMounted(() => {
               </template>
             </UserFormDialog>
           </div>
-          <DataTable
-            :value="userStore.userList"
-            scrollable
-            scroll-height="flex"
-            :loading="userStore.isLoading"
-            class="min-h-0 max-h-full"
-          >
-            <template #empty>
-              <p class="py-3 text-center">
-                {{ userStore.isLoading ? 'Loading...' : 'No Data Found!' }}
-              </p>
+          <UserTable>
+            <template #actions="{ data }">
+              <UserFormDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--pencil]"
+                    severity="info"
+                    outlined
+                    rounded
+                    @click="open(data.id)"
+                  />
+                </template>
+              </UserFormDialog>
+              <DeleteUserDialog>
+                <template #trigger="{ open }">
+                  <Button
+                    icon="icon-[tabler--trash]"
+                    severity="danger"
+                    outlined
+                    rounded
+                    @click="open(data.id)"
+                  />
+                </template>
+              </DeleteUserDialog>
             </template>
-
-            <Column field="name" header="Name" />
-            <Column>
-              <template #body="{ data }">
-                <div class="flex justify-end gap-3">
-                  <UserFormDialog>
-                    <template #trigger="{ open }">
-                      <Button
-                        icon="icon-[tabler--pencil]"
-                        severity="info"
-                        outlined
-                        rounded
-                        @click="open(data.id)"
-                      />
-                    </template>
-                  </UserFormDialog>
-                  <DeleteUserDialog>
-                    <template #trigger="{ open }">
-                      <Button
-                        icon="icon-[tabler--trash]"
-                        severity="danger"
-                        outlined
-                        rounded
-                        @click="open(data.id)"
-                      />
-                    </template>
-                  </DeleteUserDialog>
-                </div>
-              </template>
-            </Column>
-          </DataTable>
+          </UserTable>
         </div>
       </template>
     </Card>
