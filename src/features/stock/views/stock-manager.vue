@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import MenuBar from '@/components/menu-bar.vue'
 import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
 import { onMounted } from 'vue'
 import OpnameFormDialog from '../components/opname/opname-form-dialog.vue'
+import OverviewCard from '../components/overview-card.vue'
 import RestockFormDialog from '../components/restock/restock-form-dialog.vue'
 import { useStockStore } from '../stores/use-stock-store.ts'
 
@@ -11,85 +11,37 @@ const sparepartStore = useSparepartStore()
 
 onMounted(() => {
   store.fetchStockOverview()
+  sparepartStore.fetchSpareparts()
 })
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-1.5 h-svh bg-zinc-100 dark:bg-zinc-950 overflow-hidden">
-    <MenuBar />
-
+  <div class="flex flex-col gap-3 overflow-hidden">
     <div class="grid grid-cols-4 gap-3">
-      <Card class="border border-zinc-300 dark:border-zinc-700">
-        <template #content>
-          <div class="flex items-center gap-3">
-            <Tag
-              icon="icon-[tabler--packages]"
-              class="size-9! rounded-full!"
-              :pt="{ icon: 'size-4.5!' }"
-            />
-            <div class="flex flex-col gap-1.5">
-              <label class="text-sm text-zinc-500">Total Spareparts</label>
-              <h6 class="text-3xl font-medium">
-                {{ store.stockOverview?.total_spareparts.toLocaleString('en-US') ?? 0 }}
-              </h6>
-            </div>
-          </div>
-        </template>
-      </Card>
-      <Card class="border border-zinc-300 dark:border-zinc-700">
-        <template #content>
-          <div class="flex items-center gap-3">
-            <Tag
-              severity="warn"
-              icon="icon-[tabler--trending-down]"
-              class="size-9! rounded-full!"
-              :pt="{ icon: 'size-4.5!' }"
-            />
-            <div class="flex flex-col gap-1.5">
-              <label class="text-sm text-zinc-500">Low Stock Items</label>
-              <h6 class="text-3xl font-medium">
-                {{ store.stockOverview?.low_stock_items.toLocaleString('en-US') ?? 0 }}
-              </h6>
-            </div>
-          </div>
-        </template>
-      </Card>
-      <Card class="border border-zinc-300 dark:border-zinc-700">
-        <template #content>
-          <div class="flex items-center gap-3">
-            <Tag
-              severity="danger"
-              icon="icon-[tabler--circle-x]"
-              class="size-9! rounded-full!"
-              :pt="{ icon: 'size-4.5!' }"
-            />
-            <div class="flex flex-col gap-1.5">
-              <label class="text-sm text-zinc-500">Out of Stock</label>
-              <h6 class="text-3xl font-medium">
-                {{ store.stockOverview?.out_of_stock_items.toLocaleString('en-US') ?? 0 }}
-              </h6>
-            </div>
-          </div>
-        </template>
-      </Card>
-      <Card class="border border-zinc-300 dark:border-zinc-700">
-        <template #content>
-          <div class="flex items-center gap-3">
-            <Tag
-              severity="success"
-              icon="icon-[tabler--cash]"
-              class="size-9! rounded-full!"
-              :pt="{ icon: 'size-4.5!' }"
-            />
-            <div class="flex flex-col gap-1.5">
-              <label class="text-sm text-zinc-500">Total Inventory Value</label>
-              <h6 class="text-3xl font-medium">
-                {{ store.stockOverview?.total_inventory_value.toLocaleString('en-US') ?? 0 }}
-              </h6>
-            </div>
-          </div>
-        </template>
-      </Card>
+      <OverviewCard
+        icon="icon-[tabler--packages]"
+        label="Total Spareparts"
+        :value="`${store.stockOverview?.total_spareparts.toLocaleString('en-US') ?? 0}`"
+        tag-severity="primary"
+      />
+      <OverviewCard
+        icon="icon-[tabler--trending-down]"
+        label="Low Stock Items"
+        :value="`${store.stockOverview?.low_stock_items.toLocaleString('en-US') ?? 0}`"
+        tag-severity="warn"
+      />
+      <OverviewCard
+        icon="icon-[tabler--circle-x]"
+        label="Out of Stock"
+        :value="`${store.stockOverview?.out_of_stock_items.toLocaleString('en-US') ?? 0}`"
+        tag-severity="danger"
+      />
+      <OverviewCard
+        icon="icon-[tabler--cash]"
+        label="Total Inventory Value"
+        :value="`Rp. ${store.stockOverview?.total_inventory_value.toLocaleString('en-US') ?? 0}`"
+        tag-severity="success"
+      />
     </div>
 
     <Card class="border border-zinc-300 dark:border-zinc-700">
