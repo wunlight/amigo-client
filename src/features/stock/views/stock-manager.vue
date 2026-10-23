@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
+import SparepartTable from '@/features/sparepart/components/sparepart-table.vue'
 import { onMounted } from 'vue'
 import OpnameFormDialog from '../components/opname/opname-form-dialog.vue'
 import OverviewCard from '../components/overview-card.vue'
@@ -7,11 +7,9 @@ import RestockFormDialog from '../components/restock/restock-form-dialog.vue'
 import { useStockStore } from '../stores/use-stock-store.ts'
 
 const store = useStockStore()
-const sparepartStore = useSparepartStore()
 
 onMounted(() => {
   store.fetchStockOverview()
-  sparepartStore.fetchSpareparts()
 })
 </script>
 
@@ -72,24 +70,7 @@ onMounted(() => {
               </OpnameFormDialog>
             </div>
           </div>
-          <DataTable
-            :value="sparepartStore.sparepartList"
-            scrollable
-            scroll-height="flex"
-            :loading="sparepartStore.isLoading"
-            class="min-h-0 max-h-full"
-          >
-            <template #empty>
-              <p class="py-3 text-center">{{ store.isLoading ? 'Loading...' : 'No Data Found' }}</p>
-            </template>
-            <Column field="name" header="Name" />
-            <Column field="stock" header="Stock" />
-            <Column field="selling_price" header="Selling Price">
-              <template #body="{ data }">
-                <p>Rp. {{ data.selling_price.toLocaleString('en-US') }}</p>
-              </template>
-            </Column>
-          </DataTable>
+          <SparepartTable />
         </div>
       </template>
     </Card>
