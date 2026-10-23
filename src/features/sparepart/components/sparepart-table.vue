@@ -15,7 +15,7 @@ onMounted(() => {
     scrollable
     scroll-height="flex"
     :loading="store.isLoading"
-    class="min-h-0 max-h-full"
+    class="min-h-0"
   >
     <template #empty>
       <p class="py-3 text-center">

@@ -5,10 +5,16 @@ import SparepartTable from '../components/sparepart-table.vue'
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <Card class="border border-zinc-300 dark:border-zinc-700">
+  <div class="flex flex-col gap-3 min-h-0">
+    <Card
+      :pt="{
+        root: 'min-h-0 border border-zinc-300 dark:border-zinc-700 overflow-hidden',
+        body: 'min-h-0 p-4.5!',
+        content: 'min-h-0',
+      }"
+    >
       <template #content>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 min-h-0 max-h-full">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">Sparepart Manager</h6>
             <SparepartFormDialog>

@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 overflow-hidden">
+  <div class="flex flex-col gap-3 min-h-0">
     <div class="grid grid-cols-4 gap-3">
       <OverviewCard
         icon="icon-[tabler--packages]"
@@ -42,9 +42,15 @@ onMounted(() => {
       />
     </div>
 
-    <Card class="border border-zinc-300 dark:border-zinc-700">
+    <Card
+      :pt="{
+        root: 'min-h-0 border border-zinc-300 dark:border-zinc-700 overflow-hidden',
+        body: 'min-h-0 p-4.5!',
+        content: 'min-h-0',
+      }"
+    >
       <template #content>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 min-h-0 max-h-full">
           <div class="flex justify-between">
             <h6 class="self-center text-lg font-medium">Stock Manager</h6>
             <div class="flex gap-3">
