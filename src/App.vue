@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useTheme } from './composables/use-theme'
+import AppLayout from './layouts/app-layout.vue'
 
 const theme = useTheme()
 
@@ -11,6 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <RouterView />
+  <AppLayout>
+    <RouterView />
+  </AppLayout>
+
   <Toast />
 </template>

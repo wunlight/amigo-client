@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { RevenueTrend } from '@/features/dashboard/types/dashboard.type'
+import { format } from 'date-fns'
 import { computed } from 'vue'
 
 interface Props {
@@ -11,27 +12,21 @@ const props = withDefaults(defineProps<Props>(), {
   isLoading: false,
 })
 
-function formatDate(dateString: string): string {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
-
 const chartData = computed(() => ({
-  labels: props.data?.map((d) => formatDate(d.date)) ?? [],
+  labels: props.data?.map((d) => format(d.date, 'MMM dd')) ?? [],
   datasets: [
     {
       label: 'Revenue',
       data: props.data?.map((d) => d.amount) ?? [],
-      borderColor: '#10b981',
-      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+      borderColor: '#00bc7d',
+      backgroundColor: 'rgba(0, 188, 125, 0.15)',
       borderWidth: 2,
       fill: true,
       tension: 0.4,
-      pointRadius: 5,
-      pointBackgroundColor: '#10b981',
+      pointRadius: 6,
+      pointBackgroundColor: '#00bc7d',
       pointBorderColor: '#fff',
-      pointBorderWidth: 2,
-      pointHoverRadius: 7,
+      pointHoverRadius: 9,
     },
   ],
 }))
@@ -43,22 +38,13 @@ const chartOptions = computed(() => ({
     legend: {
       display: true,
       labels: {
-        color: document.documentElement.classList.contains('dark') ? '#d4d4d8' : '#71717a',
+        color: '#71717b',
         font: {
-          size: 12,
+          size: 11,
         },
       },
     },
     tooltip: {
-      backgroundColor: document.documentElement.classList.contains('dark')
-        ? 'rgba(39, 39, 42, 0.95)'
-        : 'rgba(255, 255, 255, 0.95)',
-      titleColor: document.documentElement.classList.contains('dark') ? '#fafafa' : '#000',
-      bodyColor: document.documentElement.classList.contains('dark') ? '#d4d4d8' : '#71717a',
-      borderColor: document.documentElement.classList.contains('dark') ? '#3f3f46' : '#e4e4e7',
-      borderWidth: 1,
-      padding: 12,
-      displayColors: false,
       callbacks: {
         label: (context: any) => {
           return `Rp. ${context.parsed.y.toLocaleString('en-US')}`
@@ -72,7 +58,7 @@ const chartOptions = computed(() => ({
         display: false,
       },
       ticks: {
-        color: document.documentElement.classList.contains('dark') ? '#d4d4d8' : '#71717a',
+        color: '#71717b',
         font: {
           size: 11,
         },
@@ -86,13 +72,13 @@ const chartOptions = computed(() => ({
           : 'rgba(0, 0, 0, 0.05)',
       },
       ticks: {
-        color: document.documentElement.classList.contains('dark') ? '#d4d4d8' : '#71717a',
+        color: '#71717b',
         font: {
           size: 11,
         },
         callback: (value: any) => {
           if (typeof value === 'number') {
-            return `Rp. ${(value / 1000000).toFixed(1)}M`
+            return `Rp. ${value}`
           }
           return value
         },

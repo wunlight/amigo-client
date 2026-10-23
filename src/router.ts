@@ -8,6 +8,7 @@ const routes = [
     component: () => import('@/features/dashboard/views/dashboard-view.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -15,6 +16,7 @@ const routes = [
     component: () => import('@/features/cashier/views/cashier-view.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -22,6 +24,7 @@ const routes = [
     component: () => import('@/features/stock/views/stock-manager.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -29,6 +32,7 @@ const routes = [
     component: () => import('@/features/sparepart/views/sparepart-manager.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -36,6 +40,7 @@ const routes = [
     component: () => import('@/features/operation/views/operation-manager.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -43,6 +48,7 @@ const routes = [
     component: () => import('@/features/user/views/user-manager.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
   {
@@ -50,6 +56,7 @@ const routes = [
     component: () => import('@/features/sale/views/sale-manager.vue'),
     meta: {
       protected: true,
+      layout: 'Main',
     },
   },
 ]

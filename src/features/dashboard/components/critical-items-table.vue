@@ -38,7 +38,7 @@ function getStatusLabel(status: string): string {
 </script>
 
 <template>
-  <Card class="border border-zinc-300 dark:border-zinc-700">
+  <Card :pt="{ root: 'border border-zinc-300 dark:border-zinc-700', body: 'p-4.5!' }">
     <template #content>
       <div class="flex flex-col gap-3">
         <h6 class="text-lg font-medium">Restock Needed</h6>
@@ -52,26 +52,27 @@ function getStatusLabel(status: string): string {
           <template #empty>
             <p class="py-3 text-center">{{ isLoading ? 'Loading...' : 'No critical items' }}</p>
           </template>
+
           <Column header="Item Name">
-            <template #body="{ data: row }">
-              <p class="font-medium">{{ row.name }}</p>
+            <template #body="{ data }">
+              <p class="">{{ data.name }}</p>
             </template>
           </Column>
           <Column header="Stock">
-            <template #body="{ data: row }">
-              <p class="font-semibold">{{ row.current_stock }}</p>
+            <template #body="{ data }">
+              <p class="">{{ data.current_stock }}</p>
             </template>
           </Column>
           <Column header="Price">
-            <template #body="{ data: row }">
-              <p class="">Rp. {{ row.selling_price.toLocaleString('en-US') }}</p>
+            <template #body="{ data }">
+              <p class="">Rp. {{ data.selling_price.toLocaleString('en-US') }}</p>
             </template>
           </Column>
           <Column header="Status">
-            <template #body="{ data: row }">
+            <template #body="{ data }">
               <Tag
-                :value="getStatusLabel(row.status)"
-                :severity="getStatusSeverity(row.status)"
+                :value="getStatusLabel(data.status)"
+                :severity="getStatusSeverity(data.status)"
                 class="text-xs"
               />
             </template>
