@@ -88,7 +88,7 @@ async function handleLogout() {
       <Drawer v-model:visible="showDrawer" header="Menu">
         <Menu :model="DRAWER_MENU_ITEMS" :pt="{ root: 'border-0!', itemContent: 'py-1.5' }" />
       </Drawer>
-      <slot name="left-content" />
+      <div id="menubar-left-content" />
     </div>
     <div class="flex gap-3">
       <Button
