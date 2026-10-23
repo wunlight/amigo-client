@@ -21,6 +21,11 @@ const DRAWER_MENU_ITEMS = [
     command: () => navigateTo('/'),
   },
   {
+    label: 'Sales',
+    icon: 'icon-[tabler--shopping-cart]',
+    command: () => navigateTo('/sales'),
+  },
+  {
     label: 'Stock Manager',
     icon: 'icon-[tabler--packages]',
     command: () => navigateTo('/stock-manager'),
@@ -39,11 +44,6 @@ const DRAWER_MENU_ITEMS = [
     label: 'User',
     icon: 'icon-[tabler--user]',
     command: () => navigateTo('/users'),
-  },
-  {
-    label: 'Sales',
-    icon: 'icon-[tabler--shopping-cart]',
-    command: () => navigateTo('/sales'),
   },
 ]
 const USER_MENU_ITEMS = [

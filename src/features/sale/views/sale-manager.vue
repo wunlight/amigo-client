@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MenuBar from '@/components/menu-bar.vue'
+import { format } from 'date-fns'
 import { onMounted } from 'vue'
 import RefundSaleDialog from '../components/refund-sale-dialog.vue'
 import { useSaleStore } from '../stores/use-sale-store.ts'
@@ -16,12 +16,13 @@ function handlePageChange(event: any) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-1.5 h-svh bg-zinc-100 dark:bg-zinc-950 overflow-hidden">
-    <MenuBar />
-
+  <div class="flex flex-col gap-3 min-h-0">
     <Card
-      class="min-h-0 max-h-full border border-zinc-300 dark:border-zinc-700 overflow-hidden"
-      :pt="{ body: 'min-h-0', content: 'min-h-0' }"
+      :pt="{
+        root: 'min-h-0 border border-zinc-300 dark:border-zinc-700 overflow-hidden',
+        body: 'min-h-0 p-4.5!',
+        content: 'min-h-0',
+      }"
     >
       <template #content>
         <div class="flex flex-col gap-3 min-h-0 max-h-full">
@@ -46,17 +47,17 @@ function handlePageChange(event: any) {
               </p>
             </template>
 
-            <Column field="id" header="Sale ID" style="width: 200px">
+            <Column field="id" header="Sale ID" class="w-px">
               <template #body="{ data }">
-                <span class="text-sm font-mono">{{ data.id.substring(0, 8) }}...</span>
+                <span class="">{{ data.id.substring(0, 8) }}...</span>
               </template>
             </Column>
-            <Column field="total_amount" header="Total Amount" style="width: 150px">
+            <Column field="total_amount" header="Total Amount" class="w-36">
               <template #body="{ data }">
-                <span class="font-medium">Rp {{ data.total_amount.toLocaleString('id-ID') }}</span>
+                <span class="">Rp. {{ data.total_amount.toLocaleString('en-US') }}</span>
               </template>
             </Column>
-            <Column field="status" header="Status" style="width: 120px">
+            <Column field="status" header="Status" class="w-px">
               <template #body="{ data }">
                 <Tag
                   :value="data.status"
@@ -65,9 +66,9 @@ function handlePageChange(event: any) {
                 />
               </template>
             </Column>
-            <Column field="notes" header="Notes" style="width: 200px">
+            <Column field="notes" header="Notes" class="w-48">
               <template #body="{ data }">
-                <span class="text-sm text-zinc-600 dark:text-zinc-400 truncate">
+                <span class="text-sm text-zinc-500 truncate">
                   {{ data.notes || '-' }}
                 </span>
               </template>
@@ -75,7 +76,7 @@ function handlePageChange(event: any) {
             <Column field="created_at" header="Created At" style="width: 180px">
               <template #body="{ data }">
                 <span class="text-sm">
-                  {{ new Date(data.created_at).toLocaleString('id-ID') }}
+                  {{ format(new Date(data.created_at), 'MMM dd, yyyy, HH:mm:ss') }}
                 </span>
               </template>
             </Column>
