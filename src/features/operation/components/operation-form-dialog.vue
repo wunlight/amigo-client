@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useOperationStore } from '../stores/use-operation-store.ts'
 import OperationForm from './operation-form.vue'
 
-const store = useOperationStore()
+type Props = {
+  refetch: () => void
+}
+
+const props = defineProps<Props>()
 
 const show = ref<boolean>(false)
 const operationId = ref<string | null>(null)
@@ -18,7 +21,7 @@ function closeDialog(refetch?: boolean) {
   operationId.value = null
 
   if (refetch) {
-    store.fetchOperations()
+    props.refetch()
   }
 }
 </script>

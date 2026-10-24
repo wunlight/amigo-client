@@ -2,6 +2,9 @@
 import DeleteOperationDialog from '../components/delete-operation-dialog.vue'
 import OperationFormDialog from '../components/operation-form-dialog.vue'
 import OperationTable from '../components/operation-table.vue'
+import { useOperationStore } from '../stores/use-operation-store.ts'
+
+const store = useOperationStore()
 </script>
 
 <template>
@@ -16,14 +19,14 @@ import OperationTable from '../components/operation-table.vue'
       <template #content>
         <OperationTable title="Operation List">
           <template #table-actions>
-            <OperationFormDialog>
+            <OperationFormDialog :refetch="store.fetchOperations">
               <template #trigger="{ open }">
                 <Button icon="icon-[tabler--plus]" label="Add New Operation" @click="open()" />
               </template>
             </OperationFormDialog>
           </template>
           <template #actions="{ data }">
-            <OperationFormDialog>
+            <OperationFormDialog :refetch="store.fetchOperations">
               <template #trigger="{ open }">
                 <Button
                   icon="icon-[tabler--pencil]"

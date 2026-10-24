@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
 import SparepartFormDialog from '@/features/sparepart/components/sparepart-form-dialog.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
 import { useCatalogStore } from '../../stores/use-catalog-store.ts'
 import SparepartItem from './sparepart-item.vue'
 
 const catalogStore = useCatalogStore()
 const cartStore = useCartStore()
+
 const progressSpinnerRef = ref<HTMLDivElement>()
+
+let observer: IntersectionObserver | null = null
 
 const sortedSpareparts = computed(() => {
   const filtered = catalogStore.filteredSpareparts
@@ -38,27 +41,37 @@ const showProgressSpinner = computed(() => {
   return !catalogStore.isSparepartsFullyLoaded
 })
 
-onMounted(() => {
-  catalogStore.fetchSpareparts()
+onMounted(async () => {
+  if (catalogStore.spareparts.length === 0) {
+    await catalogStore.fetchSpareparts(1)
+  }
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (
+          entry.isIntersecting &&
+          showProgressSpinner.value &&
+          !catalogStore.isFetching &&
+          !catalogStore.isLoadingSpareparts
+        ) {
+          catalogStore.loadNextSparepartsPage()
+        }
+      })
+    },
+    {
+      threshold: 0.3,
+      rootMargin: '100px',
+    },
+  )
 
   if (progressSpinnerRef.value) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && showProgressSpinner.value) {
-            catalogStore.loadNextSparepartsPage()
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
     observer.observe(progressSpinnerRef.value)
-
-    return () => {
-      observer.disconnect()
-    }
   }
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
 })
 </script>
 
@@ -68,7 +81,7 @@ onMounted(() => {
       class="flex items-center justify-between px-3 pb-3 border-b border-zinc-300 dark:border-zinc-700"
     >
       <h6 class="font-semibold text-xl">Spareparts</h6>
-      <SparepartFormDialog>
+      <SparepartFormDialog :refetch="catalogStore.fetchSpareparts">
         <template #trigger="{ open }">
           <Button
             icon="icon-[tabler--plus]"
@@ -97,12 +110,7 @@ onMounted(() => {
         ref="progressSpinnerRef"
         class="col-span-full flex justify-center py-4"
       >
-        <ProgressSpinner
-          stroke-width="4"
-          fill="none"
-          animation-duration=".8s"
-          :pt="{ svg: 'size-6' }"
-        />
+        <ProgressSpinner stroke-width="4" fill="none" class="size-10!" />
       </div>
     </ScrollContainer>
     <div v-else class="flex flex-col items-center justify-center gap-1.5 py-9 text-zinc-500">

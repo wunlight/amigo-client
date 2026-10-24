@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useSparepartStore } from '../stores/use-sparepart-store.ts'
 import SparepartForm from './sparepart-form.vue'
 
-const store = useSparepartStore()
+type Props = {
+  refetch: () => void
+}
+
+const props = defineProps<Props>()
 
 const show = ref<boolean>(false)
 const sparepartId = ref<string | null>(null)
@@ -18,7 +21,7 @@ function closeDialog(refetch?: boolean) {
   sparepartId.value = null
 
   if (refetch) {
-    store.fetchSpareparts()
+    props.refetch()
   }
 }
 </script>

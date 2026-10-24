@@ -3,9 +3,14 @@ import type { OperationDTO } from '@/features/operation/types/operation.type'
 import { listSpareparts } from '@/features/sparepart/api'
 import type { SparepartDTO } from '@/features/sparepart/types/sparepart.type'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const DEFAULT_LIMIT = 20
+
+type FetchQuery = {
+  itemType: 'sparepart' | 'operation'
+  page: number
+}
 
 export const useCatalogStore = defineStore('cashier-catalog', () => {
   const operations = ref<OperationDTO[]>([])
@@ -17,6 +22,8 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
   const sparepartsTotal = ref<number>(0)
   const isLoadingOperations = ref<boolean>(false)
   const isLoadingSpareparts = ref<boolean>(false)
+  const fetchQueue = ref<FetchQuery[]>([])
+  const isFetching = ref<boolean>(false)
 
   const isOperationsFullyLoaded = computed(() => {
     return operations.value.length >= operationsTotal.value
@@ -39,6 +46,34 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
       item.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
     )
   })
+
+  function addToQueue(query: FetchQuery) {
+    const isDuplicate = fetchQueue.value.some(
+      (q) => q.itemType === query.itemType && q.page === query.page,
+    )
+    if (!isDuplicate) {
+      fetchQueue.value.push(query)
+      processQueue()
+    }
+  }
+
+  async function processQueue() {
+    if (isFetching.value || fetchQueue.value.length === 0) return
+
+    const query = fetchQueue.value.shift()
+    if (!query) return
+
+    isFetching.value = true
+    try {
+      if (query.itemType === 'operation') {
+        await fetchOperations(query.page)
+      } else {
+        await fetchSpareparts(query.page)
+      }
+    } finally {
+      isFetching.value = false
+    }
+  }
 
   async function fetchOperations(page: number = 1) {
     isLoadingOperations.value = true
@@ -81,15 +116,11 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
   }
 
   async function loadNextOperationsPage() {
-    if (!isOperationsFullyLoaded.value && !isLoadingOperations.value) {
-      await fetchOperations(operationsCurrentPage.value + 1)
-    }
+    addToQueue({ itemType: 'operation', page: operationsCurrentPage.value + 1 })
   }
 
   async function loadNextSparepartsPage() {
-    if (!isSparepartsFullyLoaded.value && !isLoadingSpareparts.value) {
-      await fetchSpareparts(sparepartsCurrentPage.value + 1)
-    }
+    addToQueue({ itemType: 'sparepart', page: sparepartsCurrentPage.value + 1 })
   }
 
   function updateSearchQuery(query: string) {
@@ -106,7 +137,18 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
     sparepartsTotal.value = 0
     isLoadingOperations.value = false
     isLoadingSpareparts.value = false
+    fetchQueue.value = []
+    isFetching.value = false
   }
+
+  watch(
+    () => isFetching.value,
+    async (newVal) => {
+      if (!newVal && fetchQueue.value.length > 0) {
+        await processQueue()
+      }
+    },
+  )
 
   return {
     // state
@@ -119,6 +161,8 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
     sparepartsTotal,
     isLoadingOperations,
     isLoadingSpareparts,
+    fetchQueue,
+    isFetching,
     // computed
     isOperationsFullyLoaded,
     isSparepartsFullyLoaded,
@@ -131,5 +175,7 @@ export const useCatalogStore = defineStore('cashier-catalog', () => {
     loadNextSparepartsPage,
     updateSearchQuery,
     resetCatalog,
+    addToQueue,
+    processQueue,
   }
 })

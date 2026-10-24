@@ -2,6 +2,9 @@
 import DeleteSparepartDialog from '../components/delete-sparepart-dialog.vue'
 import SparepartFormDialog from '../components/sparepart-form-dialog.vue'
 import SparepartTable from '../components/sparepart-table.vue'
+import { useSparepartStore } from '../stores/use-sparepart-store.ts'
+
+const store = useSparepartStore()
 </script>
 
 <template>
@@ -16,14 +19,14 @@ import SparepartTable from '../components/sparepart-table.vue'
       <template #content>
         <SparepartTable title="Sparepart Manager">
           <template #table-actions>
-            <SparepartFormDialog>
+            <SparepartFormDialog :refetch="store.fetchSpareparts">
               <template #trigger="{ open }">
                 <Button icon="icon-[tabler--plus]" label="Add New Sparepart" @click="open()" />
               </template>
             </SparepartFormDialog>
           </template>
           <template #actions="{ data }">
-            <SparepartFormDialog>
+            <SparepartFormDialog :refetch="store.fetchSpareparts">
               <template #trigger="{ open }">
                 <Button
                   icon="icon-[tabler--pencil]"

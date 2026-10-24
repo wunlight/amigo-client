@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted } from 'vue'
 import CartContainer from '../components/cart/cart-container.vue'
 import OperationCatalog from '../components/catalog/operation-catalog.vue'
 import SparepartCatalog from '../components/catalog/sparepart-catalog.vue'
@@ -8,16 +8,10 @@ import { useCatalogStore } from '../stores/use-catalog-store'
 const catalogStore = useCatalogStore()
 
 onMounted(() => {
-  catalogStore.fetchOperations()
-  catalogStore.fetchSpareparts()
+  catalogStore.addToQueue({ itemType: 'operation', page: 1 })
+  catalogStore.addToQueue({ itemType: 'sparepart', page: 1 })
+  catalogStore.processQueue()
 })
-
-watch(
-  () => catalogStore.searchQuery,
-  (newQuery) => {
-    catalogStore.updateSearchQuery(newQuery)
-  },
-)
 </script>
 
 <template>
