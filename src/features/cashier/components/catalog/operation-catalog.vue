@@ -1,25 +1,17 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
 import OperationFormDialog from '@/features/operation/components/operation-form-dialog.vue'
-import { useOperationStore } from '@/features/operation/stores/use-operation-store.ts'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
+import { useCatalogStore } from '../../stores/use-catalog-store.ts'
 import OperationItem from './operation-item.vue'
 
-type Props = {
-  searchQuery: string
-}
-
-const props = defineProps<Props>()
-
-const operationStore = useOperationStore()
+const catalogStore = useCatalogStore()
 const cartStore = useCartStore()
+const progressSpinnerRef = ref<HTMLDivElement>()
 
 const sortedOperations = computed(() => {
-  const filtered = operationStore.operationList.filter((item) => {
-    if (!props.searchQuery) return true
-    return item.name.toLowerCase().includes(props.searchQuery.toLowerCase())
-  })
+  const filtered = catalogStore.filteredOperations
 
   return filtered.sort((a, b) => {
     const aInCart = cartStore.isInCart(a.id)
@@ -42,8 +34,31 @@ const lastInCartIdx = computed(() => {
   return lastIndex
 })
 
+const showProgressSpinner = computed(() => {
+  return !catalogStore.isOperationsFullyLoaded
+})
+
 onMounted(() => {
-  operationStore.fetchOperations()
+  catalogStore.fetchOperations()
+
+  if (progressSpinnerRef.value) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && showProgressSpinner.value) {
+            catalogStore.loadNextOperationsPage()
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    observer.observe(progressSpinnerRef.value)
+
+    return () => {
+      observer.disconnect()
+    }
+  }
 })
 </script>
 
@@ -77,11 +92,23 @@ onMounted(() => {
           class="border-r border-dashed border-zinc-300 dark:border-zinc-700"
         />
       </template>
+      <div
+        v-if="showProgressSpinner"
+        ref="progressSpinnerRef"
+        class="shrink-0 flex items-center justify-center px-4"
+      >
+        <ProgressSpinner
+          stroke-width="4"
+          fill="none"
+          animation-duration=".8s"
+          :pt="{ svg: 'size-6' }"
+        />
+      </div>
     </ScrollContainer>
     <div v-else class="flex flex-col items-center justify-center gap-1.5 h-19 text-zinc-500">
       <span class="icon-[tabler--clipboard-off] size-9" />
       <p class="text-sm">
-        {{ operationStore.isLoading ? 'Loading...' : 'No Data Found!' }}
+        {{ catalogStore.isLoadingOperations ? 'Loading...' : 'No Data Found!' }}
       </p>
     </div>
   </div>

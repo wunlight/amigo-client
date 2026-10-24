@@ -1,25 +1,17 @@
 <script setup lang="ts">
 import ScrollContainer from '@/components/scroll-container.vue'
 import SparepartFormDialog from '@/features/sparepart/components/sparepart-form-dialog.vue'
-import { useSparepartStore } from '@/features/sparepart/stores/use-sparepart-store.ts'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useCartStore } from '../../stores/use-cart-store.ts'
+import { useCatalogStore } from '../../stores/use-catalog-store.ts'
 import SparepartItem from './sparepart-item.vue'
 
-type Props = {
-  searchQuery: string
-}
-
-const props = defineProps<Props>()
-
-const sparepartStore = useSparepartStore()
+const catalogStore = useCatalogStore()
 const cartStore = useCartStore()
+const progressSpinnerRef = ref<HTMLDivElement>()
 
 const sortedSpareparts = computed(() => {
-  const filtered = sparepartStore.sparepartList.filter((item) => {
-    if (!props.searchQuery) return true
-    return item.name.toLowerCase().includes(props.searchQuery.toLowerCase())
-  })
+  const filtered = catalogStore.filteredSpareparts
 
   return filtered.sort((a, b) => {
     const aInCart = cartStore.isInCart(a.id)
@@ -42,8 +34,31 @@ const lastInCartIdx = computed(() => {
   return lastIndex
 })
 
+const showProgressSpinner = computed(() => {
+  return !catalogStore.isSparepartsFullyLoaded
+})
+
 onMounted(() => {
-  sparepartStore.fetchSpareparts()
+  catalogStore.fetchSpareparts()
+
+  if (progressSpinnerRef.value) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && showProgressSpinner.value) {
+            catalogStore.loadNextSparepartsPage()
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    observer.observe(progressSpinnerRef.value)
+
+    return () => {
+      observer.disconnect()
+    }
+  }
 })
 </script>
 
@@ -77,11 +92,23 @@ onMounted(() => {
           class="col-span-full border-b border-dashed border-zinc-300 dark:border-zinc-700"
         />
       </template>
+      <div
+        v-if="showProgressSpinner"
+        ref="progressSpinnerRef"
+        class="col-span-full flex justify-center py-4"
+      >
+        <ProgressSpinner
+          stroke-width="4"
+          fill="none"
+          animation-duration=".8s"
+          :pt="{ svg: 'size-6' }"
+        />
+      </div>
     </ScrollContainer>
     <div v-else class="flex flex-col items-center justify-center gap-1.5 py-9 text-zinc-500">
       <span class="icon-[tabler--tools-off] size-9" />
       <p class="text-sm">
-        {{ sparepartStore.isLoading ? 'Loading...' : 'No Data Found!' }}
+        {{ catalogStore.isLoadingSpareparts ? 'Loading...' : 'No Data Found!' }}
       </p>
     </div>
   </div>
