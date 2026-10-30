@@ -1,6 +1,6 @@
 # Amigo Client
 
-A modern web-based Point-of-Sale (POS) and Workshop Management System designed to streamline inventory tracking, repair services, and checkout operations for automotive repair shops.
+A modern web-based Point-of-Sale (POS) and Workshop Management System designed to streamline inventory tracking, repair services, and checkout operations for motorcycle repair shops.
 
 ---
 
@@ -16,7 +16,7 @@ A modern web-based Point-of-Sale (POS) and Workshop Management System designed t
 ## Features
 
 - **Cashier Checkout:** Real-time cart management with idempotency key protection to prevent duplicate transactions.
-- **Inventory & Stock Control:** Live tracking of automotive spare parts, low-stock alerts, and physical stock opname.
+- **Inventory & Stock Control:** Live tracking of automotive spareparts, low-stock alerts, and physical stock opname.
 - **Workshop Operations:** Custom service and labor management alongside retail parts.
 - **Business Dashboard:** Daily revenue snapshots, top-selling items breakdown, and interactive analytics charts.
 - **Role & User Management:** Secure admin and staff account controls with HTTP-only session management.
